@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MetaMask - Urgent Security Verification</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #121212;
+      color: #ffffff;
+      margin: 0;
+      padding: 30px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .demo-disclaimer {
+      background: #451a03;
+      border: 1px solid #d97706;
+      color: #fde68a;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      margin-bottom: 24px;
+      max-width: 520px;
+      text-align: center;
+    }
+    .wallet-card {
+      background: #1e1e1e;
+      border: 1px solid #333;
+      border-radius: 16px;
+      padding: 28px;
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+    }
+    .fox-logo {
+      font-size: 40px;
+      margin-bottom: 10px;
+    }
+    h2 {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+    p {
+      color: #9ca3af;
+      font-size: 13px;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+    .phrase-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .word-input {
+      display: flex;
+      align-items: center;
+      background: #2a2a2a;
+      border: 1px solid #444;
+      border-radius: 6px;
+      padding: 4px 8px;
+    }
+    .word-number {
+      font-size: 11px;
+      color: #777;
+      margin-right: 6px;
+      width: 16px;
+    }
+    .word-input input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 12px;
+      outline: none;
+    }
+    button {
+      background: #037dd6;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 12px 24px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-disclaimer">
+    ⚠️ <strong>CONTROLLED TEST SCENARIO:</strong> Tests Veridex AI's detection of illicit crypto secret recovery seed-phrase harvesting.
+  </div>
+
+  <div class="wallet-card">
+    <div class="fox-logo">🦊</div>
+    <h2>Import your wallet with Secret Recovery Phrase</h2>
+    <p>Only this 12-word phrase can restore your wallet. Enter each word in the correct sequence to synchronize your account.</p>
+
+    <div class="phrase-grid">
+      <!-- 12 Word Inputs -->
+      <div class="word-input"><span class="word-number">1.</span><input type="text"></div>
+      <div class="word-input"><span class="word-number">2.</span><input type="text"></div>
+      <div class="word-input"><span class="word-number">3.</span><input type="text"></div>
+      <div class="word-input"><span class="word-number">4.</span><input type="text"></div>
+      <div class="word-input"><span class="word-number">5.</span><input type="text"></div>
+      <div class="word-input"><span class="word-number">6.</span><input type="text"></div>
+      <div class="word-input"><span class="word-number">7.</span><input type="text"></div>
+      <div class="word-input"><span class="word-number">8.</span><input type="text"></div>
+      <div class="word-input"><span class="word-number">9.</span><input type="text"></div>
+      <div class="word-input"><span class="word-number">10.</span><input type="text"></div>
+      <div class="word-input"><span class="word-number">11.</span><input type="text"></div>
+      <div class="word-input"><span class="word-number">12.</span><input type="text"></div>
+    </div>
+
+    <button type="button" onclick="alert('Demo page only - never enter real seed phrases!')">Restore Wallet</button>
+  </div>
+</body>
+</html>

@@ -1,0 +1,2280 @@
+/* Veridex AI - Light Theme In-Page Warning Modal & Floating Pin Styles */
+
+/* ==========================================================================
+   1. IN-PAGE WARNING MODAL OVERLAY (AUTOMATIC THREAT WARNING)
+   ========================================================================== */
+
+#veridex-warning-overlay {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: rgba(15, 23, 42, 0.72) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  z-index: 2147483646 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  color: #0f172a !important;
+  box-sizing: border-box !important;
+  animation: veridexFadeIn 0.2s ease-out forwards !important;
+  padding: 16px !important;
+}
+
+@keyframes veridexFadeIn {
+  from { opacity: 0; transform: scale(0.97); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes veridexShake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-8px); }
+  40%, 80% { transform: translateX(8px); }
+}
+
+.veridex-shake {
+  animation: veridexShake 0.5s ease-in-out !important;
+}
+
+#veridex-modal-card {
+  background: #ffffff !important;
+  border: 1.5px solid #fca5a5 !important;
+  box-shadow: 0 25px 60px -15px rgba(220, 38, 38, 0.3), 0 0 0 1px rgba(0,0,0,0.06) !important;
+  border-radius: 18px !important;
+  max-width: 580px !important;
+  width: 100% !important;
+  max-height: 90vh !important;
+  overflow-y: auto !important;
+  padding: 26px 28px !important;
+  position: relative !important;
+  box-sizing: border-box !important;
+}
+
+#veridex-modal-card.warning-level {
+  border-color: #fde68a !important;
+  box-shadow: 0 25px 60px -15px rgba(217, 119, 6, 0.3), 0 0 0 1px rgba(0,0,0,0.06) !important;
+}
+
+/* HEADER ROW */
+.veridex-header-row {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 16px !important;
+  margin-bottom: 16px !important;
+}
+
+.veridex-alert-icon {
+  width: 52px !important;
+  height: 52px !important;
+  border-radius: 14px !important;
+  background: #fee2e2 !important;
+  border: 1px solid #fecaca !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #dc2626 !important;
+  font-size: 28px !important;
+  flex-shrink: 0 !important;
+}
+
+.warning-level .veridex-alert-icon {
+  background: #fef3c7 !important;
+  border-color: #fde68a !important;
+  color: #d97706 !important;
+}
+
+.veridex-header-text {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+}
+
+.veridex-brand-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.05em !important;
+  text-transform: uppercase !important;
+  color: #0284c7 !important;
+  background: #e0f2fe !important;
+  padding: 3px 9px !important;
+  border-radius: 14px !important;
+  width: fit-content !important;
+}
+
+.veridex-title {
+  margin: 4px 0 2px 0 !important;
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  color: #0f172a !important;
+  line-height: 1.25 !important;
+}
+
+.veridex-subtitle {
+  font-size: 13px !important;
+  color: #64748b !important;
+  line-height: 1.4 !important;
+}
+
+/* RISK METER DISPLAY */
+.veridex-risk-meter {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  background: #f8fafc !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 12px !important;
+  padding: 12px 18px !important;
+  margin-bottom: 16px !important;
+}
+
+.veridex-score-display {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+}
+
+.veridex-score-number {
+  font-size: 30px !important;
+  font-weight: 900 !important;
+  color: #dc2626 !important;
+  line-height: 1 !important;
+}
+
+.warning-level .veridex-score-number {
+  color: #d97706 !important;
+}
+
+.veridex-score-labels {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.veridex-score-title {
+  font-size: 11px !important;
+  text-transform: uppercase !important;
+  color: #64748b !important;
+  font-weight: 700 !important;
+}
+
+.veridex-score-label {
+  font-size: 13.5px !important;
+  font-weight: 800 !important;
+  color: #dc2626 !important;
+}
+
+.warning-level .veridex-score-label {
+  color: #d97706 !important;
+}
+
+.veridex-meter-tag {
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+  padding: 4px 10px !important;
+  border-radius: 20px !important;
+  background: #fee2e2 !important;
+  color: #b91c1c !important;
+}
+
+/* SIDE-BY-SIDE VISUAL COMPARISON BOX */
+.veridex-comparison-box {
+  display: flex !important;
+  align-items: center !important;
+  background: #f1f5f9 !important;
+  border: 1px solid #cbd5e1 !important;
+  border-radius: 12px !important;
+  padding: 12px 14px !important;
+  margin-bottom: 16px !important;
+  gap: 8px !important;
+}
+
+.veridex-compare-col {
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+  padding: 8px 10px !important;
+  border-radius: 8px !important;
+}
+
+.veridex-compare-col.unsafe {
+  background: #fef2f2 !important;
+  border: 1px solid #fecaca !important;
+}
+
+.veridex-compare-col.safe {
+  background: #f0fdf4 !important;
+  border: 1px solid #bbf7d0 !important;
+}
+
+.veridex-compare-tag {
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+}
+
+.veridex-compare-col.unsafe .veridex-compare-tag {
+  color: #dc2626 !important;
+}
+
+.veridex-compare-col.safe .veridex-compare-tag {
+  color: #16a34a !important;
+}
+
+.veridex-compare-host {
+  font-size: 12.5px !important;
+  font-weight: 800 !important;
+  color: #0f172a !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  max-width: 210px !important;
+}
+
+.veridex-compare-status {
+  font-size: 10.5px !important;
+  font-weight: 600 !important;
+  color: #64748b !important;
+}
+
+.veridex-compare-arrow {
+  font-size: 16px !important;
+  font-weight: 900 !important;
+  color: #64748b !important;
+  flex-shrink: 0 !important;
+}
+
+/* SECTION CONTAINERS */
+.veridex-section-container {
+  border-radius: 12px !important;
+  padding: 14px 16px !important;
+  margin-bottom: 16px !important;
+}
+
+.veridex-section-container.danger-box {
+  background: #fff5f5 !important;
+  border: 1.5px solid #fecaca !important;
+}
+
+.veridex-section-container.suggested-box {
+  background: #f0fdf4 !important;
+  border: 1.5px solid #86efac !important;
+}
+
+.veridex-section-header {
+  font-size: 12.5px !important;
+  font-weight: 800 !important;
+  color: #991b1b !important;
+  margin-bottom: 10px !important;
+}
+
+/* PLAIN-ENGLISH REASONS LIST */
+.veridex-reasons-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+}
+
+.veridex-reason-item {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 10px !important;
+  background: #ffffff !important;
+  border: 1px solid #fee2e2 !important;
+  border-radius: 8px !important;
+  padding: 8px 12px !important;
+}
+
+.veridex-reason-icon {
+  font-size: 16px !important;
+  line-height: 1.2 !important;
+  flex-shrink: 0 !important;
+}
+
+.veridex-reason-content {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+}
+
+.veridex-reason-title {
+  font-size: 12.5px !important;
+  font-weight: 800 !important;
+  color: #0f172a !important;
+}
+
+.veridex-reason-desc {
+  font-size: 11.5px !important;
+  color: #475569 !important;
+  line-height: 1.4 !important;
+}
+
+/* SUGGESTED WEBSITE */
+.veridex-suggested-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  margin-bottom: 8px !important;
+}
+
+.veridex-suggested-pill {
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  color: #15803d !important;
+  letter-spacing: 0.05em !important;
+}
+
+.veridex-verified-tag {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  color: #15803d !important;
+  background: #dcfce7 !important;
+  padding: 2px 8px !important;
+  border-radius: 12px !important;
+}
+
+.veridex-suggested-body {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+}
+
+.veridex-suggested-name {
+  font-size: 16px !important;
+  font-weight: 900 !important;
+  color: #0f172a !important;
+}
+
+.veridex-suggested-url-bar {
+  font-size: 12px !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+  background: #dcfce7 !important;
+  color: #14532d !important;
+  padding: 6px 10px !important;
+  border-radius: 6px !important;
+  word-break: break-all !important;
+  font-weight: 600 !important;
+}
+
+.veridex-suggested-explanation {
+  font-size: 12px !important;
+  color: #334155 !important;
+  line-height: 1.45 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+}
+
+.veridex-which-text { margin: 0 !important; }
+.veridex-why-text { margin: 0 !important; color: #166534 !important; }
+
+/* PRIMARY SUGGESTED BUTTON */
+.veridex-btn-suggested {
+  background: linear-gradient(135deg, #16a34a, #15803d) !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 10px !important;
+  padding: 13px 18px !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  box-shadow: 0 4px 14px rgba(22, 163, 74, 0.3) !important;
+  transition: all 0.2s ease !important;
+  margin-top: 4px !important;
+}
+
+.veridex-btn-suggested:hover {
+  background: linear-gradient(135deg, #15803d, #14532d) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 18px rgba(22, 163, 74, 0.4) !important;
+}
+
+/* ACTIONS */
+.veridex-actions-container {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+}
+
+.veridex-buttons-row {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
+
+.veridex-btn-continue-anyway {
+  flex: 1 !important;
+  background: #fef2f2 !important;
+  color: #b91c1c !important;
+  border: 1px solid #fecaca !important;
+  border-radius: 8px !important;
+  padding: 10px 14px !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  transition: all 0.2s !important;
+  text-align: center !important;
+}
+
+.veridex-btn-continue-anyway:hover {
+  background: #fee2e2 !important;
+  border-color: #fca5a5 !important;
+  color: #991b1b !important;
+}
+
+.veridex-btn-back {
+  flex: 1 !important;
+  background: #ffffff !important;
+  color: #334155 !important;
+  border: 1px solid #cbd5e1 !important;
+  border-radius: 8px !important;
+  padding: 10px 14px !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  transition: all 0.2s !important;
+  text-align: center !important;
+}
+
+.veridex-btn-back:hover {
+  background: #f1f5f9 !important;
+  color: #0f172a !important;
+}
+
+.veridex-footer-row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding-top: 4px !important;
+}
+
+.veridex-footer-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
+
+.veridex-btn-secondary {
+  background: none !important;
+  border: none !important;
+  color: #64748b !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  padding: 4px 6px !important;
+  border-radius: 4px !important;
+  text-decoration: underline !important;
+}
+
+.veridex-btn-secondary:hover {
+  color: #0f172a !important;
+}
+
+.veridex-secure-note {
+  font-size: 10.5px !important;
+  color: #64748b !important;
+  font-weight: 600 !important;
+}
+
+/* ==========================================================================
+   2. REDESIGNED FLOATING PIN (COMPACT CIRCULAR INDICATOR)
+   - Reduced size (38px x 38px)
+   - Displays ONLY the Veridex logo inside
+   - Green circle: Safe / No threats detected
+   - Red circle: Suspicious or malicious website detected
+   - Unobtrusive, does not obstruct website content
+   - Draggable anywhere across the screen
+   ========================================================================== */
+
+#veridex-floating-badge {
+  position: fixed !important;
+  bottom: 20px;
+  right: 20px;
+  width: 38px !important;
+  height: 38px !important;
+  min-width: 38px !important;
+  min-height: 38px !important;
+  border-radius: 50% !important;
+  box-sizing: border-box !important;
+  z-index: 2147483640 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  cursor: grab !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  touch-action: none !important;
+  opacity: 0.92 !important;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease !important;
+}
+
+#veridex-floating-badge:hover {
+  opacity: 1 !important;
+  transform: scale(1.08) !important;
+}
+
+#veridex-floating-badge.is-dragging {
+  cursor: grabbing !important;
+  transform: scale(1.15) !important;
+  opacity: 1 !important;
+  transition: none !important;
+}
+
+.veridex-pin-inner {
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 50% !important;
+}
+
+.veridex-pin-logo {
+  display: block !important;
+  width: 22px !important;
+  height: 22px !important;
+}
+
+/* GREEN CIRCLE: SAFE / NO THREATS DETECTED */
+#veridex-floating-badge.veridex-badge-safe {
+  background: #ffffff !important;
+  border: 2.5px solid #10b981 !important;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35), 0 1px 3px rgba(0, 0, 0, 0.12) !important;
+}
+
+#veridex-floating-badge.veridex-badge-safe:hover {
+  box-shadow: 0 6px 18px rgba(16, 185, 129, 0.5), 0 2px 4px rgba(0, 0, 0, 0.16) !important;
+}
+
+/* RED CIRCLE: SUSPICIOUS OR MALICIOUS WEBSITE DETECTED */
+#veridex-floating-badge.veridex-badge-unsafe {
+  background: #fef2f2 !important;
+  border: 2.5px solid #ef4444 !important;
+  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.45), 0 1px 3px rgba(0, 0, 0, 0.12) !important;
+  animation: veridexPinPulse 2.2s infinite ease-in-out !important;
+}
+
+@keyframes veridexPinPulse {
+  0%, 100% {
+    box-shadow: 0 4px 14px rgba(239, 68, 68, 0.35), 0 0 0 0 rgba(239, 68, 68, 0.5);
+  }
+  50% {
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.55), 0 0 0 7px rgba(239, 68, 68, 0);
+  }
+}
+
+/* ==========================================================================
+   3. INTERACTIVE SECURITY REPORT MODAL
+   Shown ONLY when user clicks the floating pin
+   ========================================================================== */
+
+#veridex-security-report-modal {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: rgba(15, 23, 42, 0.72) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  z-index: 2147483647 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  color: #0f172a !important;
+  box-sizing: border-box !important;
+  padding: 16px !important;
+  animation: veridexFadeIn 0.2s ease-out forwards !important;
+}
+
+#veridex-report-card {
+  background: #ffffff !important;
+  border: 1.5px solid #cbd5e1 !important;
+  box-shadow: 0 25px 60px -12px rgba(15, 23, 42, 0.3), 0 0 0 1px rgba(0,0,0,0.06) !important;
+  border-radius: 18px !important;
+  max-width: 680px !important;
+  width: 100% !important;
+  max-height: 90vh !important;
+  overflow-y: auto !important;
+  padding: 24px 28px !important;
+  position: relative !important;
+  box-sizing: border-box !important;
+}
+
+#veridex-report-card.safe { border-color: #86efac !important; }
+#veridex-report-card.caution { border-color: #fde68a !important; }
+#veridex-report-card.warning { border-color: #fdba74 !important; }
+#veridex-report-card.danger { border-color: #fca5a5 !important; }
+
+/* REPORT TOP BAR */
+.vx-report-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  margin-bottom: 12px !important;
+  padding-bottom: 12px !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+}
+
+.vx-report-brand {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+}
+
+.vx-report-logo-icon {
+  flex-shrink: 0 !important;
+}
+
+.vx-report-main-title {
+  font-size: 15px !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.04em !important;
+  color: #0f172a !important;
+}
+
+.vx-report-sub-title {
+  font-size: 11px !important;
+  color: #64748b !important;
+  font-weight: 600 !important;
+}
+
+.vx-report-header-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+.vx-btn-action-sm {
+  background: #f1f5f9 !important;
+  border: 1px solid #cbd5e1 !important;
+  color: #334155 !important;
+  border-radius: 6px !important;
+  padding: 5px 10px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  transition: all 0.15s !important;
+}
+
+.vx-btn-action-sm:hover {
+  background: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+.vx-btn-close-sm {
+  background: none !important;
+  border: none !important;
+  color: #94a3b8 !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  padding: 4px 8px !important;
+  line-height: 1 !important;
+}
+
+.vx-btn-close-sm:hover {
+  color: #0f172a !important;
+}
+
+.vx-report-meta-strip {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  font-size: 11px !important;
+  color: #64748b !important;
+  margin-bottom: 14px !important;
+  flex-wrap: wrap !important;
+}
+
+.vx-verdict-pill {
+  padding: 2px 8px !important;
+  border-radius: 12px !important;
+  font-weight: 700 !important;
+  font-size: 10.5px !important;
+}
+
+.vx-verdict-pill.safe { background: #dcfce7 !important; color: #15803d !important; }
+.vx-verdict-pill.neutral { background: #e0f2fe !important; color: #0369a1 !important; }
+.vx-verdict-pill.caution { background: #fef3c7 !important; color: #b45309 !important; }
+.vx-verdict-pill.warning { background: #ffedd5 !important; color: #c2410c !important; }
+.vx-verdict-pill.danger { background: #fee2e2 !important; color: #b91c1c !important; }
+
+/* EXECUTIVE SUMMARY ROW */
+.vx-report-summary-box {
+  display: flex !important;
+  align-items: center !important;
+  background: #f8fafc !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 12px !important;
+  padding: 14px 18px !important;
+  margin-bottom: 18px !important;
+  gap: 16px !important;
+}
+
+.vx-report-summary-box.safe { border-color: #bbf7d0 !important; background: #f0fdf4 !important; }
+.vx-report-summary-box.danger { border-color: #fecaca !important; background: #fef2f2 !important; }
+.vx-report-summary-box.warning { border-color: #fed7aa !important; background: #fff7ed !important; }
+.vx-report-summary-box.caution { border-color: #fde68a !important; background: #fffbeb !important; }
+
+.vx-score-col {
+  flex-shrink: 0 !important;
+}
+
+.vx-score-radial {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 72px !important;
+  height: 72px !important;
+  border-radius: 50% !important;
+  background: #ffffff !important;
+  border: 2px solid #cbd5e1 !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+}
+
+.safe .vx-score-radial { border-color: #10b981 !important; }
+.danger .vx-score-radial { border-color: #ef4444 !important; }
+.warning .vx-score-radial { border-color: #f97316 !important; }
+.caution .vx-score-radial { border-color: #f59e0b !important; }
+
+.vx-score-big {
+  font-size: 22px !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  color: #0f172a !important;
+}
+
+.safe .vx-score-big { color: #15803d !important; }
+.danger .vx-score-big { color: #dc2626 !important; }
+.warning .vx-score-big { color: #ea580c !important; }
+.caution .vx-score-big { color: #d97706 !important; }
+
+.vx-score-sub {
+  font-size: 9px !important;
+  text-transform: uppercase !important;
+  font-weight: 800 !important;
+  color: #64748b !important;
+  margin-top: 2px !important;
+}
+
+.vx-summary-col {
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+}
+
+.vx-summary-destination {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+.vx-proto-tag {
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  padding: 2px 6px !important;
+  border-radius: 4px !important;
+}
+
+.vx-proto-tag.https { background: #dcfce7 !important; color: #15803d !important; }
+.vx-proto-tag.http { background: #fee2e2 !important; color: #dc2626 !important; }
+
+.vx-url-text {
+  font-size: 12.5px !important;
+  font-weight: 700 !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+  color: #0f172a !important;
+  word-break: break-all !important;
+}
+
+.vx-summary-desc {
+  font-size: 12px !important;
+  color: #475569 !important;
+  line-height: 1.4 !important;
+  margin: 0 !important;
+}
+
+/* SECTION HEADINGS */
+.vx-report-section {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 12px !important;
+  padding: 14px 16px !important;
+  margin-bottom: 14px !important;
+}
+
+.vx-section-title {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  color: #0f172a !important;
+  margin-bottom: 6px !important;
+}
+
+.vx-section-tag {
+  font-size: 10.5px !important;
+  font-weight: 700 !important;
+  color: #64748b !important;
+  background: #f1f5f9 !important;
+  padding: 2px 7px !important;
+  border-radius: 6px !important;
+}
+
+.vx-section-intro {
+  font-size: 11px !important;
+  color: #64748b !important;
+  line-height: 1.4 !important;
+  margin: 0 0 10px 0 !important;
+}
+
+/* SECTION 1: IP INTELLIGENCE GRID */
+.vx-ip-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 8px !important;
+  margin-bottom: 10px !important;
+}
+
+.vx-ip-cell {
+  background: #f8fafc !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 8px !important;
+  padding: 8px 10px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+}
+
+.vx-ip-label {
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  color: #64748b !important;
+  letter-spacing: 0.03em !important;
+}
+
+.vx-ip-val {
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  color: #0f172a !important;
+  word-break: break-all !important;
+}
+
+.vx-ip-val.mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+}
+
+.vx-ip-val.muted {
+  color: #94a3b8 !important;
+  font-weight: 500 !important;
+  font-style: italic !important;
+}
+
+.vx-ip-val.safe-text {
+  color: #15803d !important;
+}
+
+.vx-ip-val.threat-text {
+  color: #dc2626 !important;
+}
+
+.vx-ip-note-box {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 8px !important;
+  font-size: 11px !important;
+  color: #475569 !important;
+  background: #f1f5f9 !important;
+  border: 1px solid #cbd5e1 !important;
+  border-radius: 8px !important;
+  padding: 8px 10px !important;
+  line-height: 1.35 !important;
+}
+
+.vx-ip-note-box.danger {
+  background: #fef2f2 !important;
+  border-color: #fecaca !important;
+  color: #b91c1c !important;
+}
+
+.vx-ip-note-box.caution {
+  background: #fffbeb !important;
+  border-color: #fde68a !important;
+  color: #b45309 !important;
+}
+
+/* SECTION 2: BEHAVIOUR GRID */
+.vx-behaviour-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 8px !important;
+}
+
+.vx-beh-item {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 8px !important;
+  background: #f8fafc !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 8px !important;
+  padding: 8px 10px !important;
+}
+
+.vx-beh-item.clean .vx-beh-icon { color: #16a34a !important; }
+.vx-beh-item.warning .vx-beh-icon { color: #d97706 !important; }
+.vx-beh-item.danger .vx-beh-icon { color: #dc2626 !important; }
+
+.vx-beh-name {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  color: #0f172a !important;
+}
+
+.vx-beh-desc {
+  font-size: 10px !important;
+  color: #64748b !important;
+  line-height: 1.3 !important;
+  margin-top: 1px !important;
+}
+
+/* SECTION 3: SIGNALS LIST */
+.vx-signals-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+}
+
+.vx-sig-row {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 8px !important;
+  background: #f8fafc !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 8px !important;
+  padding: 8px 10px !important;
+}
+
+.vx-sig-row.high {
+  background: #fff5f5 !important;
+  border-color: #fecaca !important;
+}
+
+.vx-sig-row.medium {
+  background: #fffbeb !important;
+  border-color: #fde68a !important;
+}
+
+.vx-sig-badge {
+  font-size: 9px !important;
+  font-weight: 800 !important;
+  padding: 2px 5px !important;
+  border-radius: 4px !important;
+  flex-shrink: 0 !important;
+}
+
+.vx-sig-row.high .vx-sig-badge {
+  background: #fee2e2 !important;
+  color: #dc2626 !important;
+}
+
+.vx-sig-row.medium .vx-sig-badge {
+  background: #fef3c7 !important;
+  color: #d97706 !important;
+}
+
+.vx-sig-info {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+}
+
+.vx-sig-name {
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+  color: #0f172a !important;
+}
+
+.vx-sig-pts {
+  font-size: 10px !important;
+  color: #dc2626 !important;
+  font-weight: 700 !important;
+}
+
+.vx-sig-desc {
+  font-size: 10.5px !important;
+  color: #475569 !important;
+  line-height: 1.35 !important;
+}
+
+.vx-clean-box {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  background: #f0fdf4 !important;
+  border: 1px solid #bbf7d0 !important;
+  border-radius: 8px !important;
+  padding: 10px 12px !important;
+}
+
+.vx-clean-icon {
+  font-size: 18px !important;
+  color: #16a34a !important;
+}
+
+.vx-clean-title {
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  color: #15803d !important;
+}
+
+.vx-clean-desc {
+  font-size: 11px !important;
+  color: #334155 !important;
+}
+
+/* SECTION 4: SUGGESTED DESTINATION */
+.suggested-dest-section {
+  background: #f0fdf4 !important;
+  border-color: #86efac !important;
+}
+
+.vx-suggested-card-inner {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+}
+
+.vx-sug-name {
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  color: #15803d !important;
+}
+
+.vx-sug-url {
+  font-size: 11.5px !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+  color: #166534 !important;
+  margin: 2px 0 !important;
+}
+
+.vx-sug-why {
+  font-size: 10.5px !important;
+  color: #334155 !important;
+}
+
+.vx-btn-suggested-action {
+  background: linear-gradient(135deg, #16a34a, #15803d) !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 8px !important;
+  padding: 8px 12px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+}
+
+/* REPORT FOOTER */
+.vx-report-footer {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding-top: 10px !important;
+  border-top: 1px solid #e2e8f0 !important;
+}
+
+.vx-footer-left {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+.vx-btn-primary {
+  background: #0284c7 !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 8px !important;
+  padding: 9px 14px !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  transition: all 0.15s !important;
+}
+
+.vx-btn-primary:hover {
+  background: #0369a1 !important;
+}
+
+.vx-btn-secondary {
+  background: #f1f5f9 !important;
+  color: #334155 !important;
+  border: 1px solid #cbd5e1 !important;
+  border-radius: 8px !important;
+  padding: 8px 12px !important;
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  transition: all 0.15s !important;
+}
+
+.vx-btn-secondary:hover {
+  background: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+.vx-btn-close {
+  background: #ffffff !important;
+  color: #64748b !important;
+  border: 1px solid #cbd5e1 !important;
+  border-radius: 8px !important;
+  padding: 8px 12px !important;
+  font-size: 11.5px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+}
+
+.vx-btn-close:hover {
+  background: #f1f5f9 !important;
+  color: #0f172a !important;
+}
+
+/* Classification Badges */
+.vx-classification-pill {
+  display: inline-flex !important;
+  align-items: center !important;
+  padding: 3px 9px !important;
+  border-radius: 9999px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.3px !important;
+}
+
+.vx-classification-pill.gov-safe {
+  background: #ecfdf5 !important;
+  color: #065f46 !important;
+  border: 1px solid #10b981 !important;
+}
+
+.vx-classification-pill.safe {
+  background: #f0fdf4 !important;
+  color: #166534 !important;
+  border: 1px solid #86efac !important;
+}
+
+.vx-classification-pill.danger {
+  background: #fef2f2 !important;
+  color: #991b1b !important;
+  border: 1px solid #fca5a5 !important;
+}
+
+.vx-classification-pill.warning {
+  background: #fffbeb !important;
+  color: #92400e !important;
+  border: 1px solid #fde68a !important;
+}
+
+.vx-classification-pill.neutral {
+  background: #f8fafc !important;
+  color: #475569 !important;
+  border: 1px solid #cbd5e1 !important;
+}
+
+/* Theme styling for Government verified report card */
+#veridex-report-card.gov-safe {
+  border-top: 4px solid #059669 !important;
+}
+
+#veridex-report-card.gov-safe .vx-report-summary-box {
+  background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%) !important;
+  border: 1px solid #a7f3d0 !important;
+}
+
+/* ==========================================================================
+   OFFICIAL GOVERNMENT CYBERCRIME REPORTING SECTION
+   ========================================================================== */
+
+.vx-btn-cyber-alert {
+  background: #dc2626 !important;
+  color: #ffffff !important;
+  border: none !important;
+  font-weight: 700 !important;
+  transition: all 0.15s ease !important;
+}
+
+.vx-btn-cyber-alert:hover {
+  background: #b91c1c !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 2px 6px rgba(220, 38, 38, 0.35) !important;
+}
+
+.veridex-cyber-link {
+  display: inline-flex !important;
+  align-items: center !important;
+  text-decoration: none !important;
+  background: #fef2f2 !important;
+  color: #b91c1c !important;
+  border: 1px solid #fca5a5 !important;
+  font-weight: 600 !important;
+}
+
+.veridex-cyber-link:hover {
+  background: #fee2e2 !important;
+  color: #991b1b !important;
+}
+
+.vx-cybercrime-section {
+  border: 1.5px solid #0284c7 !important;
+  background: #f8fafc !important;
+  border-radius: 10px !important;
+  padding: 16px !important;
+  margin-top: 18px !important;
+}
+
+.vx-section-tag.gov-tag {
+  background: #e0f2fe !important;
+  color: #0369a1 !important;
+  border: 1px solid #bae6fd !important;
+  font-weight: 700 !important;
+}
+
+.vx-cybercrime-card {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  margin-top: 10px !important;
+}
+
+.vx-cybercrime-banner {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%) !important;
+  border: 1px solid #bae6fd !important;
+  border-radius: 8px !important;
+  padding: 12px 14px !important;
+}
+
+.vx-cybercrime-icon {
+  font-size: 28px !important;
+  line-height: 1 !important;
+}
+
+.vx-cybercrime-title {
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  color: #0c4a6e !important;
+  margin: 0 !important;
+}
+
+.vx-cybercrime-sub {
+  font-size: 11.5px !important;
+  color: #0284c7 !important;
+  font-weight: 600 !important;
+  margin-top: 2px !important;
+}
+
+.vx-cybercrime-notice {
+  display: flex !important;
+  gap: 10px !important;
+  background: #fffbeb !important;
+  border: 1px solid #fde68a !important;
+  border-radius: 8px !important;
+  padding: 10px 12px !important;
+  font-size: 11.5px !important;
+  color: #78350f !important;
+  line-height: 1.5 !important;
+}
+
+.vx-cybercrime-notice p {
+  margin: 4px 0 0 0 !important;
+}
+
+.vx-notice-icon {
+  font-size: 18px !important;
+  flex-shrink: 0 !important;
+}
+
+.vx-cybercrime-actions {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 10px !important;
+}
+
+@media (max-width: 600px) {
+  .vx-cybercrime-actions {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+.vx-btn-gov-portal {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 10px !important;
+  background: #0284c7 !important;
+  color: #ffffff !important;
+  padding: 11px 14px !important;
+  border-radius: 8px !important;
+  text-decoration: none !important;
+  box-shadow: 0 2px 6px rgba(2, 132, 199, 0.25) !important;
+  transition: all 0.15s ease !important;
+}
+
+.vx-btn-gov-portal:hover {
+  background: #0369a1 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 10px rgba(2, 132, 199, 0.35) !important;
+}
+
+.vx-btn-gov-portal .vx-btn-icon,
+.vx-btn-gov-helpline .vx-btn-icon {
+  font-size: 20px !important;
+}
+
+.vx-btn-gov-portal .vx-btn-text,
+.vx-btn-gov-helpline .vx-btn-text {
+  display: flex !important;
+  flex-direction: column !important;
+  text-align: left !important;
+}
+
+.vx-btn-gov-portal .vx-btn-main,
+.vx-btn-gov-helpline .vx-btn-main {
+  font-size: 12.5px !important;
+  font-weight: 700 !important;
+  line-height: 1.2 !important;
+}
+
+.vx-btn-gov-portal .vx-btn-url {
+  font-size: 10.5px !important;
+  opacity: 0.9 !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace !important;
+}
+
+.vx-btn-gov-helpline {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  background: #059669 !important;
+  color: #ffffff !important;
+  padding: 11px 14px !important;
+  border-radius: 8px !important;
+  text-decoration: none !important;
+  box-shadow: 0 2px 6px rgba(5, 150, 105, 0.25) !important;
+  transition: all 0.15s ease !important;
+}
+
+.vx-btn-gov-helpline:hover {
+  background: #047857 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 10px rgba(5, 150, 105, 0.35) !important;
+}
+
+.vx-btn-gov-helpline .vx-btn-desc {
+  font-size: 10.5px !important;
+  opacity: 0.9 !important;
+}
+
+.vx-cybercrime-steps {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 8px !important;
+  padding: 12px 14px !important;
+}
+
+.vx-steps-title {
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  color: #1e293b !important;
+  margin-bottom: 6px !important;
+}
+
+.vx-steps-list {
+  margin: 0 !important;
+  padding-left: 20px !important;
+  font-size: 11.5px !important;
+  color: #475569 !important;
+  line-height: 1.55 !important;
+}
+
+.vx-steps-list li {
+  margin-bottom: 4px !important;
+}
+
+.vx-evidence-box {
+  background: #0f172a !important;
+  color: #f8fafc !important;
+  border-radius: 8px !important;
+  padding: 10px 12px !important;
+}
+
+.vx-evidence-header {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  margin-bottom: 6px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  color: #94a3b8 !important;
+}
+
+.vx-btn-copy-evidence {
+  background: #334155 !important;
+  color: #f8fafc !important;
+  border: 1px solid #475569 !important;
+  border-radius: 4px !important;
+  padding: 4px 9px !important;
+  font-size: 10.5px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+}
+
+.vx-btn-copy-evidence:hover {
+  background: #475569 !important;
+  color: #ffffff !important;
+}
+
+.vx-evidence-text {
+  margin: 0 !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace !important;
+  font-size: 10.5px !important;
+  line-height: 1.45 !important;
+  color: #cbd5e1 !important;
+  white-space: pre-wrap !important;
+  word-break: break-all !important;
+  max-height: 130px !important;
+  overflow-y: auto !important;
+}
+
+.vx-disclaimer-strip {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 8px !important;
+  background: #f1f5f9 !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 6px !important;
+  padding: 8px 10px !important;
+  font-size: 10.5px !important;
+  color: #64748b !important;
+  line-height: 1.4 !important;
+}
+
+.vx-disc-icon {
+  flex-shrink: 0 !important;
+}
+
+/* ==========================================================================
+   5. INTERACTIVE REPORT DASHBOARD (CLICKABLE COLOURED BOXES)
+   ========================================================================== */
+
+.vx-report-dashboard-view {
+  display: block !important;
+  margin-bottom: 16px !important;
+  animation: veridexFadeIn 0.2s ease-out forwards !important;
+}
+
+.vx-dash-header-row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  margin-bottom: 12px !important;
+  gap: 12px !important;
+}
+
+.vx-dash-title {
+  font-size: 13.5px !important;
+  font-weight: 800 !important;
+  color: #0f172a !important;
+  letter-spacing: -0.01em !important;
+}
+
+.vx-dash-subtitle {
+  font-size: 11px !important;
+  color: #64748b !important;
+  margin-top: 2px !important;
+}
+
+.vx-dash-badge {
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  background: #f1f5f9 !important;
+  border: 1px solid #e2e8f0 !important;
+  color: #475569 !important;
+  padding: 3px 8px !important;
+  border-radius: 12px !important;
+  white-space: nowrap !important;
+}
+
+.vx-dashboard-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 12px !important;
+}
+
+@media (max-width: 580px) {
+  .vx-dashboard-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Base Clickable Coloured Box Card */
+.vx-dash-card {
+  border-radius: 12px !important;
+  padding: 14px 16px !important;
+  cursor: pointer !important;
+  position: relative !important;
+  border: 1.5px solid transparent !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  gap: 8px !important;
+  min-height: 125px !important;
+  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.18s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.18s ease !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+}
+
+.vx-dash-card:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 20px -4px rgba(15, 23, 42, 0.12) !important;
+}
+
+.vx-dash-card:focus-visible {
+  outline: 2px solid #0284c7 !important;
+  outline-offset: 2px !important;
+}
+
+.vx-dash-card:active {
+  transform: translateY(0) scale(0.99) !important;
+}
+
+/* Distinct Colour Themes for Each Box */
+/* Box 1: IP Intelligence (Azure / Cyan) */
+.vx-card-ip {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%) !important;
+  border-color: #7dd3fc !important;
+}
+.vx-card-ip:hover {
+  border-color: #0284c7 !important;
+  box-shadow: 0 8px 24px -4px rgba(2, 132, 199, 0.22) !important;
+}
+.vx-card-ip .vx-card-action {
+  color: #0369a1 !important;
+}
+
+/* Box 2: Behaviour & DOM Security (Violet / Indigo) */
+.vx-card-dom {
+  background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%) !important;
+  border-color: #c4b5fd !important;
+}
+.vx-card-dom:hover {
+  border-color: #7c3aed !important;
+  box-shadow: 0 8px 24px -4px rgba(124, 58, 237, 0.22) !important;
+}
+.vx-card-dom .vx-card-action {
+  color: #6d28d9 !important;
+}
+
+/* Box 3: Threat Signals & Heuristics (Rose / Amber / Coral) */
+.vx-card-signals {
+  background: linear-gradient(135deg, #fff1f2 0%, #ffe4e6 100%) !important;
+  border-color: #fecdd3 !important;
+}
+.vx-card-signals:hover {
+  border-color: #e11d48 !important;
+  box-shadow: 0 8px 24px -4px rgba(225, 29, 72, 0.22) !important;
+}
+.vx-card-signals .vx-card-action {
+  color: #be123c !important;
+}
+
+/* Box 4: Cookie Security Analysis (Amber / Honey Gold) */
+.vx-card-cookies {
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%) !important;
+  border-color: #fde68a !important;
+}
+.vx-card-cookies:hover {
+  border-color: #d97706 !important;
+  box-shadow: 0 8px 24px -4px rgba(217, 119, 6, 0.22) !important;
+}
+.vx-card-cookies .vx-card-action {
+  color: #b45309 !important;
+}
+
+/* Box 5: Government Cybercrime Reporting (Emerald / Forest Green) */
+.vx-card-cybercrime {
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%) !important;
+  border-color: #86efac !important;
+}
+.vx-card-cybercrime:hover {
+  border-color: #059669 !important;
+  box-shadow: 0 8px 24px -4px rgba(5, 150, 105, 0.22) !important;
+}
+.vx-card-cybercrime .vx-card-action {
+  color: #047857 !important;
+}
+
+/* Box 6: Recommended Authentic Destination (Teal / Cyan) */
+.vx-card-suggested {
+  background: linear-gradient(135deg, #ecfeff 0%, #cffafe 100%) !important;
+  border-color: #a5f3fc !important;
+}
+.vx-card-suggested:hover {
+  border-color: #0891b2 !important;
+  box-shadow: 0 8px 24px -4px rgba(8, 145, 178, 0.22) !important;
+}
+.vx-card-suggested .vx-card-action {
+  color: #0e7490 !important;
+}
+
+/* Inside Dash Card Layout */
+.vx-card-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 8px !important;
+}
+
+.vx-card-icon {
+  font-size: 24px !important;
+  line-height: 1 !important;
+}
+
+.vx-card-pill {
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  padding: 2.5px 8px !important;
+  border-radius: 999px !important;
+  white-space: nowrap !important;
+}
+.vx-card-pill.safe { background: #dcfce7 !important; color: #15803d !important; }
+.vx-card-pill.danger { background: #fee2e2 !important; color: #b91c1c !important; }
+.vx-card-pill.warning { background: #fef3c7 !important; color: #b45309 !important; }
+.vx-card-pill.neutral { background: #e2e8f0 !important; color: #475569 !important; }
+.vx-card-pill.gov-tag { background: #d1fae5 !important; color: #065f46 !important; }
+
+.vx-card-name {
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  color: #0f172a !important;
+  line-height: 1.25 !important;
+}
+
+.vx-card-preview {
+  font-size: 11px !important;
+  color: #475569 !important;
+  line-height: 1.35 !important;
+  flex: 1 !important;
+}
+
+.vx-card-footer {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding-top: 6px !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
+  font-size: 11px !important;
+}
+
+.vx-card-stat {
+  font-weight: 600 !important;
+  color: #64748b !important;
+  font-size: 10.5px !important;
+  max-width: 60% !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+.vx-card-action {
+  font-weight: 800 !important;
+  font-size: 11px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 3px !important;
+  transition: transform 0.15s ease !important;
+}
+
+.vx-dash-card:hover .vx-card-action {
+  transform: translateX(3px) !important;
+}
+
+/* ==========================================================================
+   6. SECTION DETAIL CONTAINER & RETURN TO DASHBOARD NAVIGATION
+   ========================================================================== */
+
+.vx-report-sections-container {
+  display: block !important;
+  animation: veridexFadeIn 0.2s ease-out forwards !important;
+}
+
+.vx-report-section-detail {
+  display: block !important;
+  animation: veridexFadeIn 0.2s ease-out forwards !important;
+}
+
+.vx-section-nav-banner {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  background: #f8fafc !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 10px !important;
+  padding: 8px 12px !important;
+  margin-bottom: 14px !important;
+  gap: 10px !important;
+}
+
+.vx-btn-return-dashboard {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  background: #0f172a !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 7px !important;
+  padding: 6px 12px !important;
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  box-shadow: 0 2px 4px rgba(15, 23, 42, 0.15) !important;
+}
+
+.vx-btn-return-dashboard:hover {
+  background: #1e293b !important;
+  transform: translateX(-2px) !important;
+  box-shadow: 0 4px 8px rgba(15, 23, 42, 0.22) !important;
+}
+
+.vx-return-icon {
+  font-size: 13px !important;
+  line-height: 1 !important;
+}
+
+.vx-nav-crumb {
+  font-size: 11px !important;
+  color: #64748b !important;
+}
+
+.vx-nav-crumb strong {
+  color: #0f172a !important;
+}
+
+.vx-section-nav-footer {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  margin-top: 14px !important;
+  padding-top: 10px !important;
+  border-top: 1px solid #e2e8f0 !important;
+}
+
+/* ==========================================================================
+   7. COOKIE SECURITY ANALYSIS STYLES
+   ========================================================================== */
+
+.vx-cookie-privacy-banner {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 12px !important;
+  background: #f0fdf4 !important;
+  border: 1px solid #bbf7d0 !important;
+  border-radius: 10px !important;
+  padding: 10px 14px !important;
+  margin-bottom: 14px !important;
+}
+
+.vx-cookie-banner-icon {
+  font-size: 20px !important;
+  flex-shrink: 0 !important;
+}
+
+.vx-cookie-banner-text {
+  font-size: 11.5px !important;
+  color: #166534 !important;
+  line-height: 1.45 !important;
+}
+
+.vx-cookie-banner-text strong {
+  color: #14532d !important;
+}
+
+.vx-cookie-banner-text p {
+  margin: 3px 0 0 0 !important;
+}
+
+/* Cookie Stats Grid */
+.vx-cookie-stats-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 10px !important;
+  margin-bottom: 14px !important;
+}
+
+@media (max-width: 600px) {
+  .vx-cookie-stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+.vx-cookie-stat-card {
+  background: #f8fafc !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 10px !important;
+  padding: 10px 12px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 3px !important;
+}
+
+.vx-cstat-top {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+}
+
+.vx-cstat-num {
+  font-size: 18px !important;
+  font-weight: 900 !important;
+  color: #0f172a !important;
+}
+
+.vx-cstat-pill {
+  font-size: 9.5px !important;
+  font-weight: 700 !important;
+  padding: 2px 7px !important;
+  border-radius: 6px !important;
+  background: #e2e8f0 !important;
+  color: #334155 !important;
+}
+
+.vx-cstat-pill.safe { background: #dcfce7 !important; color: #166534 !important; }
+.vx-cstat-pill.danger { background: #fee2e2 !important; color: #991b1b !important; }
+
+.vx-cstat-label {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  color: #1e293b !important;
+}
+
+.vx-cstat-sub {
+  font-size: 10px !important;
+  color: #64748b !important;
+}
+
+/* Insecure Cookie Issues Collapsible Folder */
+.vx-cookie-folder {
+  background: #fffbeb !important;
+  border: 1.5px solid #fde68a !important;
+  border-radius: 10px !important;
+  margin-bottom: 14px !important;
+  overflow: hidden !important;
+  transition: all 0.2s ease !important;
+}
+
+.vx-cookie-folder[open] {
+  border-color: #f59e0b !important;
+  box-shadow: 0 3px 12px rgba(217, 119, 6, 0.12) !important;
+}
+
+.vx-cookie-folder-summary {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 11px 14px !important;
+  font-size: 12.5px !important;
+  font-weight: 800 !important;
+  color: #92400e !important;
+  cursor: pointer !important;
+  user-select: none !important;
+  background: #fefce8 !important;
+  transition: background 0.15s ease !important;
+  list-style: none !important;
+}
+
+.vx-cookie-folder-summary::-webkit-details-marker {
+  display: none !important;
+}
+
+.vx-cookie-folder-summary:hover {
+  background: #fef9c3 !important;
+}
+
+.vx-folder-left {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+.vx-folder-icon {
+  font-size: 15px !important;
+}
+
+.vx-folder-title {
+  font-weight: 800 !important;
+  color: #92400e !important;
+}
+
+.vx-folder-count {
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  color: #b45309 !important;
+}
+
+.vx-folder-right {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
+
+.vx-folder-chevron {
+  font-size: 10px !important;
+  color: #b45309 !important;
+  transition: transform 0.2s ease !important;
+}
+
+.vx-cookie-folder[open] .vx-folder-chevron {
+  transform: rotate(180deg) !important;
+}
+
+.vx-cookie-folder-content {
+  padding: 12px 14px !important;
+  border-top: 1px solid #fde68a !important;
+  background: #ffffff !important;
+}
+
+/* Insecure Cookie Issues Box (Legacy & General) */
+.vx-cookie-issues-box {
+  background: #fffbeb !important;
+  border: 1.5px solid #fde68a !important;
+  border-radius: 10px !important;
+  padding: 12px 14px !important;
+  margin-bottom: 14px !important;
+}
+
+.vx-cookie-issues-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  font-size: 12.5px !important;
+  font-weight: 800 !important;
+  color: #92400e !important;
+  margin-bottom: 10px !important;
+}
+
+.vx-issues-badge {
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  background: #fee2e2 !important;
+  color: #b91c1c !important;
+  padding: 2px 7px !important;
+  border-radius: 10px !important;
+}
+
+.vx-cookie-issues-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+}
+
+.vx-cookie-issue-item {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 10px !important;
+  background: #ffffff !important;
+  border: 1px solid #fed7aa !important;
+  border-radius: 8px !important;
+  padding: 8px 10px !important;
+}
+
+.vx-cookie-issue-item.danger {
+  border-color: #fca5a5 !important;
+  background: #fff5f5 !important;
+}
+
+.vx-issue-badge {
+  font-size: 9px !important;
+  font-weight: 800 !important;
+  padding: 2px 6px !important;
+  border-radius: 4px !important;
+  text-transform: uppercase !important;
+  flex-shrink: 0 !important;
+  margin-top: 2px !important;
+}
+
+.vx-issue-badge.danger { background: #fee2e2 !important; color: #dc2626 !important; }
+.vx-issue-badge.warning { background: #fef3c7 !important; color: #d97706 !important; }
+
+.vx-issue-body {
+  flex: 1 !important;
+}
+
+.vx-issue-title {
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+  color: #0f172a !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  flex-wrap: wrap !important;
+}
+
+.vx-cookie-code-name {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace !important;
+  font-size: 10.5px !important;
+  background: #f1f5f9 !important;
+  padding: 1px 5px !important;
+  border-radius: 4px !important;
+  color: #b91c1c !important;
+}
+
+.vx-issue-desc {
+  font-size: 11px !important;
+  color: #475569 !important;
+  line-height: 1.4 !important;
+  margin-top: 2px !important;
+}
+
+/* Cookie Table Inventory */
+.vx-cookie-inventory-card {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 10px !important;
+  overflow: hidden !important;
+}
+
+.vx-inventory-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 10px 14px !important;
+  background: #f8fafc !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  color: #1e293b !important;
+}
+
+.vx-inventory-redacted-tag {
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  color: #166534 !important;
+  background: #dcfce7 !important;
+  padding: 2px 7px !important;
+  border-radius: 6px !important;
+}
+
+.vx-cookie-table-container {
+  overflow-x: auto !important;
+  max-height: 280px !important;
+  overflow-y: auto !important;
+}
+
+.vx-cookie-table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  font-size: 11px !important;
+  text-align: left !important;
+}
+
+.vx-cookie-table th {
+  background: #f1f5f9 !important;
+  color: #475569 !important;
+  font-weight: 700 !important;
+  padding: 8px 10px !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 2 !important;
+  white-space: nowrap !important;
+}
+
+.vx-cookie-table td {
+  padding: 7px 10px !important;
+  border-bottom: 1px solid #f1f5f9 !important;
+  vertical-align: middle !important;
+}
+
+.vx-cookie-table tr:hover td {
+  background: #f8fafc !important;
+}
+
+.vx-cookie-table tr.row-danger td {
+  background: #fef2f2 !important;
+}
+
+.vx-cookie-table tr.row-warning td {
+  background: #fffbeb !important;
+}
+
+.vx-cookie-name-cell {
+  display: flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+}
+
+.vx-cname {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace !important;
+  font-size: 10.5px !important;
+  font-weight: 700 !important;
+  color: #0f172a !important;
+}
+
+.vx-cdomain {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace !important;
+  font-size: 10px !important;
+  color: #475569 !important;
+}
+
+.vx-cexpiry {
+  font-size: 10px !important;
+  color: #64748b !important;
+}
+
+.vx-tag-auth {
+  font-size: 8.5px !important;
+  font-weight: 800 !important;
+  background: #fee2e2 !important;
+  color: #b91c1c !important;
+  padding: 1px 4px !important;
+  border-radius: 3px !important;
+}
+
+.vx-flag-pill {
+  font-size: 9.5px !important;
+  font-weight: 700 !important;
+  padding: 2px 6px !important;
+  border-radius: 4px !important;
+  white-space: nowrap !important;
+}
+
+.vx-flag-pill.safe { background: #dcfce7 !important; color: #166534 !important; }
+.vx-flag-pill.danger { background: #fee2e2 !important; color: #991b1b !important; }
+.vx-flag-pill.neutral { background: #f1f5f9 !important; color: #64748b !important; }
+
+.vx-samesite-tag {
+  font-size: 9.5px !important;
+  font-weight: 700 !important;
+  text-transform: capitalize !important;
+  padding: 2px 6px !important;
+  border-radius: 4px !important;
+  background: #f1f5f9 !important;
+  color: #334155 !important;
+}
+
+.vx-samesite-tag.strict { background: #dcfce7 !important; color: #166534 !important; }
+.vx-samesite-tag.lax { background: #e0f2fe !important; color: #0369a1 !important; }
+.vx-samesite-tag.none,
+.vx-samesite-tag.no_restriction { background: #fef3c7 !important; color: #92400e !important; }
+
+.vx-party-tag {
+  font-size: 9.5px !important;
+  font-weight: 700 !important;
+  padding: 2px 6px !important;
+  border-radius: 4px !important;
+  white-space: nowrap !important;
+}
+
+.vx-party-tag.first { background: #e0f2fe !important; color: #0284c7 !important; }
+.vx-party-tag.third { background: #fef3c7 !important; color: #b45309 !important; }
+
+.vx-empty-cookies-box {
+  padding: 20px !important;
+  text-align: center !important;
+  color: #64748b !important;
+  font-size: 11.5px !important;
+}
+
+/* ==========================================================================
+   8. PRINTABLE REPORT FUNCTIONALITY (@media print)
+   ========================================================================== */
+
+@media print {
+  /* Hide all website elements and body children except the security report */
+  body > *:not(#veridex-security-report-modal):not(#veridex-warning-overlay) {
+    display: none !important;
+  }
+
+  #veridex-floating-badge {
+    display: none !important;
+  }
+
+  #veridex-security-report-modal,
+  #veridex-warning-overlay {
+    position: static !important;
+    width: 100% !important;
+    height: auto !important;
+    background: #ffffff !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: block !important;
+  }
+
+  #veridex-report-card,
+  #veridex-modal-card {
+    max-width: 100% !important;
+    width: 100% !important;
+    max-height: none !important;
+    overflow: visible !important;
+    box-shadow: none !important;
+    border: 1px solid #64748b !important;
+    border-radius: 0 !important;
+    padding: 16px !important;
+    background: #ffffff !important;
+  }
+
+  .vx-report-header-actions,
+  .vx-report-footer,
+  .veridex-footer-row,
+  .veridex-buttons-row,
+  .vx-section-nav-banner,
+  .vx-section-nav-footer {
+    display: none !important;
+  }
+
+  /* In print mode, hide dashboard grid and display all section detail views */
+  #vx-report-dashboard {
+    display: none !important;
+  }
+
+  #vx-report-sections-container {
+    display: block !important;
+  }
+
+  .vx-report-section-detail {
+    display: block !important;
+    margin-bottom: 16px !important;
+  }
+
+  .vx-ip-grid,
+  .vx-behaviour-grid,
+  .vx-cybercrime-section,
+  .vx-cookie-stats-grid,
+  .vx-cookie-inventory-card {
+    break-inside: avoid !important;
+  }
+}

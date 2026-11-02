@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Veridex AI - Settings & Protection Preferences</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="options-container">
+    <header class="options-header">
+      <div class="brand">
+        <img src="../icons/icon48.png" alt="Veridex AI" class="logo">
+        <div>
+          <h1>Veridex AI Protection Settings</h1>
+          <p>Configure local on-device heuristics, detection thresholds, and warning behavior.</p>
+        </div>
+      </div>
+    </header>
+
+    <div class="content-body">
+      <!-- Section: General Protection -->
+      <section class="settings-card">
+        <h2>🛡️ Active Protection Engines</h2>
+        <div class="setting-row">
+          <div class="setting-info">
+            <label class="setting-label">Real-Time Navigation Monitor</label>
+            <p class="setting-subtext">Analyzes destinations locally in the background whenever navigation occurs.</p>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="opt-protection" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <label class="setting-label">In-Page Warning Alert Modal</label>
+            <p class="setting-subtext">Displays an unmissable modal overlay when suspicious or phishing threats are detected.</p>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="opt-modal-warning" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <label class="setting-label">Desktop Notifications</label>
+            <p class="setting-subtext">Sends OS/browser push notifications when severe cyber threats are detected.</p>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="opt-notifications" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+      </section>
+
+      <!-- Section: Detection Sensitivity -->
+      <section class="settings-card">
+        <h2>⚙️ Heuristic Sensitivity</h2>
+        <div class="setting-row">
+          <div class="setting-info">
+            <label class="setting-label">Strict Heuristic Mode</label>
+            <p class="setting-subtext">Lowers threshold to trigger caution warnings for borderline unfamiliar domains.</p>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="opt-strict-mode">
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-info">
+            <label class="setting-label">Scan Links on Hover</label>
+            <p class="setting-subtext">Inspects target URLs in the background when your mouse hovers over links.</p>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="opt-hover-scan">
+            <span class="slider"></span>
+          </label>
+        </div>
+      </section>
+
+      <!-- Section: Privacy Architecture -->
+      <section class="settings-card">
+        <h2>🔒 Privacy & On-Device Guarantee</h2>
+        <p class="privacy-note">
+          Veridex AI operates with zero cloud telemetry. Your browsing history, visited URLs, and page signals never leave your computer. All lexical parsing, Levenshtein distance metrics, and DOM inspections execute 100% locally within your browser.
+        </p>
+      </section>
+
+      <div class="save-bar">
+        <span id="save-status" class="save-status">Settings saved</span>
+        <button id="btn-save" class="btn-save">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>

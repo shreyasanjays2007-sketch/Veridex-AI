@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Veridex AI – Web Safety & Scam Verification</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="veridex-app">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="brand-group">
+        <div class="logo-box">
+          <img src="../icons/icon32.png" alt="Veridex AI" class="logo-img" />
+          <span class="live-dot" title="100% On-Device Protection Active"></span>
+        </div>
+        <div>
+          <h1 class="brand-name">Veridex AI</h1>
+          <p class="brand-tagline">Web Safety &amp; Scam Verification Portal</p>
+        </div>
+      </div>
+      <div class="status-indicator-pill" id="header-status-pill">
+        <span class="pulse-indicator"></span>
+        <span id="protection-status-text">100% Offline Engine</span>
+      </div>
+    </header>
+
+    <!-- Browser Context Limitation Disclosure -->
+    <div class="browser-disclosure-banner">
+      <span class="disclosure-icon">ℹ️</span>
+      <div class="disclosure-text">
+        <strong>Standalone Web Engine:</strong> Runs complete offline lexical heuristics, IP intelligence, brand verification, and TLD datasets on-device. Live cross-origin cookie inspection &amp; in-page warning overlays require the companion <strong>Veridex AI Browser Extension</strong>.
+      </div>
+    </div>
+
+    <!-- Search / Verify Bar -->
+    <section class="top-search-section">
+      <div class="search-input-wrapper">
+        <span class="search-icon">🔍</span>
+        <input 
+          type="text" 
+          id="search-url-input" 
+          placeholder="Enter or paste any website URL (e.g. paypal-security-update.com)..." 
+          autocomplete="off" 
+          spellcheck="false" 
+        />
+        <button id="btn-clear-search" class="btn-clear-input" title="Clear input" style="display:none;">✕</button>
+        <button id="btn-verify-search" class="btn-verify-action">Verify</button>
+      </div>
+
+      <!-- Quick Test Sample Chips -->
+      <div class="test-samples-bar">
+        <span class="samples-label">Quick Presets:</span>
+        <button class="test-chip verified" data-url="https://cybercrime.gov.in">cybercrime.gov.in</button>
+        <button class="test-chip verified" data-url="https://incometax.gov.in">incometax.gov.in</button>
+        <button class="test-chip verified" data-url="https://www.google.co.in">google.co.in</button>
+        <button class="test-chip caution" data-url="https://discount-shop.xyz">discount-shop.xyz</button>
+        <button class="test-chip danger" data-url="http://paypal-security-update.com">paypal-phish</button>
+        <button class="test-chip danger" data-url="http://fake-apple-login.com">fake-apple</button>
+      </div>
+    </section>
+
+    <!-- Results Top Layout Grid (Hero Score & Suggested Authentic Website) -->
+    <div class="results-layout-grid" id="results-layout-grid">
+      <!-- Top Score & Detection Result Card -->
+      <section class="top-score-section" id="result-section" style="display:none;">
+        <div class="hero-score-card neutral" id="hero-score-card">
+          <div class="target-meta-row">
+            <div class="protocol-host-group">
+              <span class="protocol-badge" id="hero-protocol">HTTPS</span>
+              <span class="target-hostname" id="hero-hostname" title="Inspected Host">Destination</span>
+            </div>
+            <span class="db-status-tag" id="hero-db-tag">⚡ Multi-Vector Heuristics</span>
+          </div>
+          <div class="score-main-row">
+            <div class="gauge-wrapper">
+              <svg class="radial-gauge" viewBox="0 0 100 100">
+                <circle class="gauge-bg" cx="50" cy="50" r="42"></circle>
+                <circle class="gauge-bar" id="gauge-progress-bar" cx="50" cy="50" r="42" stroke-dasharray="264" stroke-dashoffset="264"></circle>
+              </svg>
+              <div class="gauge-text-overlay">
+                <span class="gauge-pct" id="hero-score-value">0%</span>
+                <span class="gauge-label">RISK</span>
+              </div>
+            </div>
+            <div class="verdict-meta-block">
+              <div class="verdict-badge-pill" id="hero-verdict-badge">Inspecting…</div>
+              <p class="verdict-summary-text" id="hero-summary-text">Analyzing website security and reputation…</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Suggested Official Website Card (when scam/phishing detected) -->
+      <section id="website-suggested-card" class="suggested-card" style="display:none;">
+        <div class="suggested-header">
+          <span class="suggested-pill">🛡️ Suggested Authentic Website</span>
+          <span class="suggested-brand" id="suggested-brand">Official Destination</span>
+        </div>
+        <div class="suggested-desc" id="suggested-desc">
+          We detected this site is not safe. The legitimate official website is available below:
+        </div>
+        <a id="suggested-link-btn" class="suggested-btn" href="#" target="_blank" rel="noopener noreferrer">
+          <span id="suggested-btn-label">👉 Go to Official Website Safely</span>
+        </a>
+        <div class="why-unsafe-box" id="why-unsafe-box">
+          <div class="why-title">⚠️ Why this site is NOT safe:</div>
+          <div class="why-list" id="why-unsafe-list"></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Main Dashboard: Information Available Directly Inside the Boxes -->
+    <section class="dashboard-section" id="dashboard-section" style="display:none;">
+      <div class="dashboard-header-row">
+        <div>
+          <h2 class="dashboard-title">🗂️ Security Audit Dashboard</h2>
+          <p class="dashboard-subtitle">Key findings and live metrics available inside each box below. Click any box for full detailed audit findings.</p>
+        </div>
+        <div class="quick-toolbar">
+          <button id="btn-quick-print" class="toolbar-btn" title="Print security audit report">🖨️ Print</button>
+          <button id="btn-quick-download" class="toolbar-btn" title="Download report file">⬇️ Download</button>
+          <button id="btn-quick-copy" class="toolbar-btn" title="Copy evidence text">📋 Copy Evidence</button>
+        </div>
+      </div>
+
+      <!-- Information Available Inside Every Box -->
+      <div class="vx-dashboard-square-grid">
+        <!-- Box 1: Threat Signals -->
+        <div class="dashboard-square card-signals" data-section="signals" role="button" tabindex="0">
+          <div class="box-top-row">
+            <span class="box-icon">🚨</span>
+            <span class="box-badge" id="box-signals-badge">0 Flags</span>
+          </div>
+          <div class="box-title">Threat Signals &amp; Indicators</div>
+          <div class="box-body" id="box-signals-preview">
+            <div class="box-preview-item clean">✓ All heuristics clean</div>
+          </div>
+          <div class="box-footer">Open Detailed Signals <span>→</span></div>
+        </div>
+
+        <!-- Box 2: Multi-Factor Risk Breakdown -->
+        <div class="dashboard-square card-breakdown" data-section="breakdown" role="button" tabindex="0">
+          <div class="box-top-row">
+            <span class="box-icon">📊</span>
+            <span class="box-badge" id="box-breakdown-badge">4 Vectors</span>
+          </div>
+          <div class="box-title">Multi-Vector Risk Assessment</div>
+          <div class="box-body" id="box-breakdown-preview">
+            <div class="mini-bar-row">
+              <span class="mini-label">Domain</span>
+              <div class="mini-track"><div class="mini-fill" id="mini-bar-domain" style="width:0%"></div></div>
+              <span class="mini-val" id="mini-val-domain">0</span>
+            </div>
+            <div class="mini-bar-row">
+              <span class="mini-label">Lexical</span>
+              <div class="mini-track"><div class="mini-fill" id="mini-bar-lexical" style="width:0%"></div></div>
+              <span class="mini-val" id="mini-val-lexical">0</span>
+            </div>
+            <div class="mini-bar-row">
+              <span class="mini-label">Security</span>
+              <div class="mini-track"><div class="mini-fill" id="mini-bar-security" style="width:0%"></div></div>
+              <span class="mini-val" id="mini-val-security">0</span>
+            </div>
+            <div class="mini-bar-row">
+              <span class="mini-label">Content</span>
+              <div class="mini-track"><div class="mini-fill" id="mini-bar-content" style="width:0%"></div></div>
+              <span class="mini-val" id="mini-val-content">0</span>
+            </div>
+          </div>
+          <div class="box-footer">Open Risk Breakdown <span>→</span></div>
+        </div>
+
+        <!-- Box 3: Threat Intelligence & Hosting -->
+        <div class="dashboard-square card-intel" data-section="intel" role="button" tabindex="0">
+          <div class="box-top-row">
+            <span class="box-icon">🌐</span>
+            <span class="box-badge" id="box-intel-badge">DB Match</span>
+          </div>
+          <div class="box-title">Threat Intelligence &amp; Hosting</div>
+          <div class="box-body" id="box-intel-preview">
+            <div class="intel-stat-row">
+              <span class="stat-name">Apex Domain:</span>
+              <span class="stat-val" id="box-intel-apex">-</span>
+            </div>
+            <div class="intel-stat-row">
+              <span class="stat-name">TLD Abuse Risk:</span>
+              <span class="stat-val" id="box-intel-tld">-</span>
+            </div>
+            <div class="intel-stat-row">
+              <span class="stat-name">Server IP:</span>
+              <span class="stat-val" id="box-intel-ip">Unavailable</span>
+            </div>
+            <div class="intel-stat-row">
+              <span class="stat-name">Hosting Org:</span>
+              <span class="stat-val" id="box-intel-org">Unavailable</span>
+            </div>
+          </div>
+          <div class="box-footer">Open Intelligence &amp; DB <span>→</span></div>
+        </div>
+
+        <!-- Box 4: Cookie Security Analysis -->
+        <div class="dashboard-square card-cookies" data-section="cookies" role="button" tabindex="0">
+          <div class="box-top-row">
+            <span class="box-icon">🍪</span>
+            <span class="box-badge" id="box-cookies-badge">Zero Telemetry</span>
+          </div>
+          <div class="box-title">Cookie Security &amp; Privacy</div>
+          <div class="box-body" id="box-cookies-preview">
+            <div class="cookie-stat-row">
+              <span>Security State:</span>
+              <strong id="box-cookies-status" style="color:var(--safe)">Compliant</strong>
+            </div>
+            <div class="cookie-stat-row">
+              <span>Audited Metadata:</span>
+              <span id="box-cookies-counts">0 Mand • 0 Acc • 0 Rej</span>
+            </div>
+            <div class="cookie-stat-note">Zero cookie values are ever captured or sent.</div>
+          </div>
+          <div class="box-footer">Open Cookie Analysis <span>→</span></div>
+        </div>
+
+        <!-- Box 5: Government Cybercrime Helpline (1930) -->
+        <div class="dashboard-square card-cybercrime" data-section="cybercrime" role="button" tabindex="0">
+          <div class="box-top-row">
+            <span class="box-icon">🏛️</span>
+            <span class="box-badge" style="background:#e0f2fe; color:#0284c7">Helpline 1930</span>
+          </div>
+          <div class="box-title">Report Cybercrime (India)</div>
+          <div class="box-body" id="box-cyber-preview">
+            <div class="cyber-highlight-row">
+              <span>📞 National Helpline:</span>
+              <strong>1930 (Toll-Free)</strong>
+            </div>
+            <div class="cyber-highlight-row">
+              <span>🌐 Official Portal:</span>
+              <span>cybercrime.gov.in</span>
+            </div>
+            <div class="cyber-stat-note">Immediate assistance for financial fraud &amp; phishing scams.</div>
+          </div>
+          <div class="box-footer">Open Cybercrime Portal <span>→</span></div>
+        </div>
+
+        <!-- Box 6: Full Security Audit Report -->
+        <div class="dashboard-square card-report" data-section="report" role="button" tabindex="0">
+          <div class="box-top-row">
+            <span class="box-icon">📋</span>
+            <span class="box-badge" id="box-report-badge">Full Audit</span>
+          </div>
+          <div class="box-title">Executive Audit Report</div>
+          <div class="box-body" id="box-report-preview">
+            <div class="report-stat-row">
+              <span>Status:</span>
+              <strong id="box-report-verdict">Ready to Export</strong>
+            </div>
+            <div class="report-stat-row">
+              <span>Risk Classification:</span>
+              <span id="box-report-grade">Heuristic Grade</span>
+            </div>
+            <div class="report-stat-note">Includes complete telemetry, timestamps &amp; recommendations.</div>
+          </div>
+          <div class="box-footer">View Full Report <span>→</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sub-Section Detail Views (Opened when clicking a box) -->
+    
+    <!-- Detail Section 1: Signals -->
+    <section class="sub-section" id="section-signals" style="display:none;">
+      <div class="section-nav-banner">
+        <span class="nav-crumb">Dashboard / <strong>Threat Signals &amp; Heuristics</strong></span>
+        <button class="return-dashboard btn-return-top">← Back to Dashboard</button>
+      </div>
+      <div class="detail-header-card">
+        <h2>🚨 Detected Security Indicators</h2>
+        <span class="section-badge" id="signals-detail-badge">0 Flags</span>
+      </div>
+      <div class="signals-list-box" id="signals-content"></div>
+      <div class="section-footer-action">
+        <button class="return-dashboard">← Return to Dashboard</button>
+      </div>
+    </section>
+
+    <!-- Detail Section 2: Breakdown -->
+    <section class="sub-section" id="section-breakdown" style="display:none;">
+      <div class="section-nav-banner">
+        <span class="nav-crumb">Dashboard / <strong>Multi-Vector Risk Breakdown</strong></span>
+        <button class="return-dashboard btn-return-top">← Back to Dashboard</button>
+      </div>
+      <div class="detail-header-card">
+        <h2>📊 Multi-Category Risk Assessment</h2>
+        <span class="section-badge">4 Security Vectors</span>
+      </div>
+      <p class="section-intro">Risk is computed across 4 core vectors in real-time:</p>
+      <div class="category-bars-list" id="breakdown-content">
+        <div class="cat-bar-item">
+          <div class="cat-bar-header">
+            <span class="cat-title">🌐 Domain Authority &amp; TLD Risk</span>
+            <span class="cat-val" id="cat-val-domain">0/100</span>
+          </div>
+          <div class="progress-track"><div class="progress-fill" id="cat-bar-domain" style="width:0%"></div></div>
+        </div>
+        <div class="cat-bar-item">
+          <div class="cat-bar-header">
+            <span class="cat-title">🔤 Lexical &amp; Brand Spoofing</span>
+            <span class="cat-val" id="cat-val-lexical">0/100</span>
+          </div>
+          <div class="progress-track"><div class="progress-fill" id="cat-bar-lexical" style="width:0%"></div></div>
+        </div>
+        <div class="cat-bar-item">
+          <div class="cat-bar-header">
+            <span class="cat-title">🔒 Connection &amp; SSL Security</span>
+            <span class="cat-val" id="cat-val-security">0/100</span>
+          </div>
+          <div class="progress-track"><div class="progress-fill" id="cat-bar-security" style="width:0%"></div></div>
+        </div>
+        <div class="cat-bar-item">
+          <div class="cat-bar-header">
+            <span class="cat-title">🛡️ Page Forms &amp; Input Safety</span>
+            <span class="cat-val" id="cat-val-content">0/100</span>
+          </div>
+          <div class="progress-track"><div class="progress-fill" id="cat-bar-content" style="width:0%"></div></div>
+        </div>
+      </div>
+      <div class="risk-scale-legend">
+        <span class="legend-chip safe">0-5% Safe</span>
+        <span class="legend-chip neutral">6-20% Low</span>
+        <span class="legend-chip caution">21-34% Caution</span>
+        <span class="legend-chip warning">35-59% Suspicious</span>
+        <span class="legend-chip danger">60-98% Threat</span>
+      </div>
+      <div class="section-footer-action">
+        <button class="return-dashboard">← Return to Dashboard</button>
+      </div>
+    </section>
+
+    <!-- Detail Section 3: Intelligence & DB -->
+    <section class="sub-section" id="section-intel" style="display:none;">
+      <div class="section-nav-banner">
+        <span class="nav-crumb">Dashboard / <strong>Threat Intelligence &amp; Hosting</strong></span>
+        <button class="return-dashboard btn-return-top">← Back to Dashboard</button>
+      </div>
+      <div class="detail-header-card">
+        <h2>🌐 Threat Intelligence &amp; Verification</h2>
+      </div>
+      <div class="intel-cards-grid">
+        <div class="intel-card">
+          <span class="intel-label">Database Match</span>
+          <span class="intel-value" id="intel-db-match">Heuristic Evaluation</span>
+        </div>
+        <div class="intel-card">
+          <span class="intel-label">Apex Domain</span>
+          <span class="intel-value" id="intel-apex">-</span>
+        </div>
+        <div class="intel-card">
+          <span class="intel-label">TLD Abuse Risk</span>
+          <span class="intel-value" id="intel-tld">-</span>
+        </div>
+        <div class="intel-card">
+          <span class="intel-label">Homoglyph / Punycode</span>
+          <span class="intel-value" id="intel-homoglyph">Clean</span>
+        </div>
+      </div>
+
+      <!-- IP Intelligence & Hosting Analysis -->
+      <div class="live-probe-card" style="margin-top:12px;">
+        <div class="probe-title">🛰️ Offline IP Intelligence &amp; Hosting Risk</div>
+        <div class="intel-cards-grid" style="margin-top:8px;">
+          <div class="intel-card">
+            <span class="intel-label">Resolved Server IP</span>
+            <span class="intel-value" id="intel-ip-addr">Unavailable</span>
+          </div>
+          <div class="intel-card">
+            <span class="intel-label">Hosting Provider / Org</span>
+            <span class="intel-value" id="intel-ip-org">Unavailable</span>
+          </div>
+          <div class="intel-card">
+            <span class="intel-label">ASN</span>
+            <span class="intel-value" id="intel-ip-asn">Unavailable</span>
+          </div>
+          <div class="intel-card">
+            <span class="intel-label">Country / Geo</span>
+            <span class="intel-value" id="intel-ip-geo">Unavailable</span>
+          </div>
+        </div>
+        <div id="intel-ip-threat-status" class="probe-pill" style="margin-top:8px; display:block; text-align:center;">
+          Offline IP analysis: Ready
+        </div>
+      </div>
+
+      <div class="full-url-display" style="margin-top:12px;">
+        <span class="url-label">Inspected URL:</span>
+        <span class="url-text" id="intel-full-url">-</span>
+      </div>
+      <div class="section-footer-action">
+        <button class="return-dashboard">← Return to Dashboard</button>
+      </div>
+    </section>
+
+    <!-- Detail Section 4: Cookies -->
+    <section class="sub-section" id="section-cookies" style="display:none;">
+      <div class="section-nav-banner">
+        <span class="nav-crumb">Dashboard / <strong>Cookie Security &amp; Privacy</strong></span>
+        <button class="return-dashboard btn-return-top">← Back to Dashboard</button>
+      </div>
+      <div class="detail-header-card">
+        <h2>🍪 Cookie Security &amp; Privacy Analysis</h2>
+        <span class="section-badge" id="cookies-detail-badge">Zero Telemetry</span>
+      </div>
+      <div class="privacy-notice-box">
+        <strong>🔒 Zero-Telemetry Privacy Guarantee:</strong>
+        Actual cookie values are <strong>never displayed, stored, or transmitted</strong>. Analysis evaluates metadata only (Secure, HttpOnly, SameSite, domain, and expiry).
+      </div>
+      <div class="browser-limitation-box">
+        <strong>ℹ️ Browser Sandbox Notice:</strong>
+        In standalone website mode, cross-domain cookie inspection is restricted by browser security policies. For active live cookie tracking on any web page you visit, install the <strong>Veridex AI Browser Extension</strong>. Below is an offline metadata simulation audit:
+      </div>
+      <div class="cookie-stats-grid">
+        <div class="cookie-stat-card">
+          <div class="cstat-title">Mandatory Cookies</div>
+          <div class="cstat-val" id="cookie-stat-mandatory">0</div>
+          <div class="cstat-sub">Strictly Necessary</div>
+        </div>
+        <div class="cookie-stat-card">
+          <div class="cstat-title">Accepted Cookies</div>
+          <div class="cstat-val" id="cookie-stat-accepted">0</div>
+          <div class="cstat-sub">Functional / Permitted</div>
+        </div>
+        <div class="cookie-stat-card">
+          <div class="cstat-title">Rejected Cookies</div>
+          <div class="cstat-val" id="cookie-stat-rejected" style="color:var(--danger)">0</div>
+          <div class="cstat-sub">Non-Compliant / Trackers</div>
+        </div>
+      </div>
+      <div id="cookies-content" style="margin-top:12px;"></div>
+      <div class="section-footer-action">
+        <button class="return-dashboard">← Return to Dashboard</button>
+      </div>
+    </section>
+
+    <!-- Detail Section 5: Cybercrime -->
+    <section class="sub-section" id="section-cybercrime" style="display:none;">
+      <div class="section-nav-banner">
+        <span class="nav-crumb">Dashboard / <strong>Report Cybercrime (India)</strong></span>
+        <button class="return-dashboard btn-return-top">← Back to Dashboard</button>
+      </div>
+      <div class="detail-header-card">
+        <h2>🏛️ Report Cybercrime (Government of India)</h2>
+        <span class="section-badge" style="background:#e0f2fe; color:#0369a1;">National Portal</span>
+      </div>
+      <div class="cyber-hero-banner">
+        <span class="cyber-flag">🇮🇳</span>
+        <div>
+          <div class="cyber-portal-title">National Cyber Crime Reporting Portal</div>
+          <div class="cyber-portal-sub">Ministry of Home Affairs, Government of India • Helpline 1930</div>
+        </div>
+      </div>
+      <div class="cyber-action-buttons">
+        <a href="https://cybercrime.gov.in/" target="_blank" rel="noopener noreferrer" class="cyber-link-btn portal">
+          <span>🌐 Open cybercrime.gov.in</span>
+          <span>↗</span>
+        </a>
+        <a href="tel:1930" class="cyber-link-btn phone">
+          <span>📞 Call Toll-Free Helpline 1930 (Financial Frauds)</span>
+          <span>📞</span>
+        </a>
+      </div>
+      <button id="btn-copy-evidence-cyber" class="btn-copy-evidence">
+        📋 Copy Inspected Site Evidence to Clipboard
+      </button>
+      <div class="cyber-disclaimer">
+        ℹ️ Veridex AI operates 100% offline using curated datasets. It does not automatically report websites or transmit personal data. Please submit complaints directly through the official National Cyber Crime Reporting Portal.
+      </div>
+      <div class="section-footer-action">
+        <button class="return-dashboard">← Return to Dashboard</button>
+      </div>
+    </section>
+
+    <!-- Detail Section 6: Full Report -->
+    <section class="sub-section" id="section-report" style="display:none;">
+      <div class="section-nav-banner">
+        <span class="nav-crumb">Dashboard / <strong>Full Security Audit Report</strong></span>
+        <button class="return-dashboard btn-return-top">← Back to Dashboard</button>
+      </div>
+      <div class="detail-header-card">
+        <h2>📋 Complete Security Audit Report</h2>
+        <div class="report-top-actions">
+          <button id="btn-print-report-view" class="action-btn">🖨️ Print</button>
+          <button id="btn-download-report-view" class="action-btn">⬇️ Download</button>
+          <button id="btn-copy-report-view" class="action-btn">📋 Copy</button>
+        </div>
+      </div>
+      <div class="report-content-container" id="full-report-content"></div>
+      <div class="section-footer-action">
+        <button class="return-dashboard">← Return to Dashboard</button>
+      </div>
+    </section>
+
+    <!-- App Footer -->
+    <footer class="app-footer">
+      <span>🔒 100% On-Device Processing</span>
+      <span>•</span>
+      <span>Zero Cloud Telemetry</span>
+      <span>•</span>
+      <span>Veridex AI v2.1</span>
+    </footer>
+  </div>
+
+  <!-- Load engine files using standard browser scripts without modifying extension -->
+  <script src="../engine/brand-database.js"></script>
+  <script src="../engine/tld-risk.js"></script>
+  <script src="../engine/ip-intelligence.js"></script>
+  <script src="../engine/cookie-analyzer.js"></script>
+  <script src="../engine/veridex-ml-model.js"></script>
+  <script src="../engine/veridex-engine.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

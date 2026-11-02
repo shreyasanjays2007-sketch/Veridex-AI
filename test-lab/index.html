@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Veridex AI - Threat Detection Test Lab</title>
+  <link rel="stylesheet" href="test-lab.css">
+  <!-- Include Core Engine scripts for direct standalone testing without extension loaded -->
+  <script src="../engine/brand-database.js"></script>
+  <script src="../engine/tld-risk.js"></script>
+  <script src="../engine/ip-intelligence.js"></script>
+  <script src="../engine/cookie-analyzer.js"></script>
+  <script src="../engine/veridex-ml-model.js"></script>
+  <script src="../engine/veridex-engine.js"></script>
+</head>
+<body>
+  <div class="lab-container">
+    <!-- Header -->
+    <header class="lab-header">
+      <div class="header-left">
+        <img src="../icons/icon48.png" alt="Veridex AI" class="lab-icon">
+        <div>
+          <h1 class="lab-title">Veridex AI Threat Verification Lab</h1>
+          <p class="lab-subtitle">Test and verify on-device detection, warnings, and neutral state assessments</p>
+        </div>
+      </div>
+      <div class="status-badge">
+        <span class="pulse"></span>
+        <span>Local Engine Active</span>
+      </div>
+    </header>
+
+    <!-- SECTION 1 (ON TOP): Interactive URL Heuristic Analyzer -->
+    <section class="tester-box">
+      <div class="section-heading">
+        <span>🔍</span>
+        <span>Interactive URL Heuristic Analyzer</span>
+      </div>
+
+      <div class="tester-controls">
+        <input type="text" id="test-url-input" class="tester-input" placeholder="Enter any URL or domain (e.g. http://paypal.com.account-update.xyz/login)" spellcheck="false">
+        <button id="btn-run-test" class="tester-btn">Analyze Locally</button>
+      </div>
+
+      <div class="presets-row">
+        <span class="presets-label">Quick Test Presets:</span>
+        <button class="preset-chip" data-url="www.scam.com">Explicit Scam (scam.com)</button>
+        <button class="preset-chip" data-url="http://fake-apple-login.com">Fake Brand (fake-apple)</button>
+        <button class="preset-chip" data-url="https://cybercrime.gov.in">Government (cybercrime.gov.in)</button>
+        <button class="preset-chip" data-url="https://cybercrime.gov.in.attacker.xyz">Deceptive Gov Spoof</button>
+        <button class="preset-chip" data-url="http://fake-gov.in">Stitched Gov Lookalike</button>
+        <button class="preset-chip" data-url="http://paypal-security-update.com">Brand Phish (paypal-update)</button>
+        <button class="preset-chip" data-url="http://free-robux-generator.net">Gaming Scam (free-robux)</button>
+        <button class="preset-chip" data-url="http://192.168.1.150/chase-online">Raw IP Hostname</button>
+        <button class="preset-chip" data-url="https://arnazon.com/checkout">Typosquatting (arnazon)</button>
+        <button class="preset-chip" data-url="https://www.google.co.in">Canonical Brand (google.co.in)</button>
+        <button class="preset-chip" data-url="https://en.wikipedia.org/wiki/Scam">Legitimate Neutral Site</button>
+      </div>
+
+      <!-- Live Inspection Output -->
+      <div id="test-result-container" class="live-result" style="display: none;">
+        <div class="result-top">
+          <div>
+            <span id="test-result-badge" class="result-badge-lg danger">Suspicious</span>
+            <span id="test-result-target" style="margin-left: 10px; font-weight: 600; font-size: 14px;"></span>
+          </div>
+          <div class="result-score-val" id="test-result-score">85% Risk</div>
+        </div>
+
+        <p id="test-result-summary" style="font-size: 13.5px; color: #334155; margin-bottom: 12px;"></p>
+
+        <div style="font-size: 11px; text-transform: uppercase; font-weight: 700; color: #64748b; letter-spacing: 0.05em; margin-bottom: 6px;">
+          Detected Heuristics & Signals:
+        </div>
+        <div id="test-signals-list" class="signals-breakdown"></div>
+      </div>
+    </section>
+
+    <!-- SECTION 2 (BELOW): Workflow Diagram Section -->
+    <section class="workflow-section">
+      <div class="section-heading">
+        <span>⚡</span>
+        <span>How VeriDex AI Works (Active Workflow)</span>
+      </div>
+
+      <div class="workflow-grid">
+        <div class="workflow-node step1">
+          <div class="node-title">
+            <span>🖱️</span>
+            <span>1. User clicks a website link</span>
+          </div>
+          <div class="node-desc">For example, a suspicious shopping, banking, or crypto link</div>
+        </div>
+
+        <div class="arrow-down">↓</div>
+
+        <div class="workflow-node step2">
+          <div class="node-title">
+            <span>🛡️</span>
+            <span>2. VeriDex runs in the background</span>
+          </div>
+          <div class="node-desc">Checks the URL and available webpage signals locally on-device</div>
+        </div>
+
+        <div class="arrow-down">↓</div>
+
+        <div class="branch-row">
+          <div class="branch-node suspicious">
+            <div class="branch-title">
+              <span>⚠️</span>
+              <span>Suspicious</span>
+            </div>
+            <div class="branch-desc">
+              Show a warning popup and explain the risk. Blocks navigation or provides an impossible-to-miss safety alert with detected heuristics.
+            </div>
+          </div>
+
+          <div class="branch-node neutral">
+            <div class="branch-title">
+              <span>🛡️</span>
+              <span>No warning triggered</span>
+            </div>
+            <div class="branch-desc">
+              Show a neutral status; don't guarantee the site is safe. Informs the user that no immediate red flags were found while maintaining zero false sense of security.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3 (BELOW): Controlled Test Scenarios Grid -->
+    <section class="scenarios-section">
+      <div class="section-heading">
+        <span>🧪</span>
+        <span>Controlled Test Websites & Scenarios</span>
+      </div>
+
+      <div class="scenarios-grid">
+        <!-- Scenario 1 -->
+        <div class="scenario-card">
+          <span class="scenario-tag danger">High Risk Threat</span>
+          <h3 class="scenario-title">1. Fake Banking / Brand Spoofing</h3>
+          <p class="scenario-desc">
+            Simulates a deceptive PayPal/Chase banking portal. Contains brand title spoofing, an insecure login form, and credential exfiltration.
+          </p>
+          <div class="scenario-signals-preview">
+            Expected: In-page Warning Modal • 85%+ Risk • Typosquatting / Form Mismatch
+          </div>
+          <a href="scenarios/fake-banking.html" target="_blank" class="btn-launch">
+            <span>🚀 Open Banking Scenario</span>
+          </a>
+        </div>
+
+        <!-- Scenario 2 -->
+        <div class="scenario-card">
+          <span class="scenario-tag danger">Urgency Scam</span>
+          <h3 class="scenario-title">2. Flash Sale & Card Harvester</h3>
+          <p class="scenario-desc">
+            Simulates an urgent 95% discount scam with active countdown timer, coercive language, and credit card number capture form.
+          </p>
+          <div class="scenario-signals-preview">
+            Expected: Urgency Coercion • CC Harvest Warning • High Risk Percentage
+          </div>
+          <a href="scenarios/scam-shopping.html" target="_blank" class="btn-launch">
+            <span>🚀 Open Shopping Scenario</span>
+          </a>
+        </div>
+
+        <!-- Scenario 3 -->
+        <div class="scenario-card">
+          <span class="scenario-tag danger">Crypto Threat</span>
+          <h3 class="scenario-title">3. Seed Phrase Phishing</h3>
+          <p class="scenario-desc">
+            Simulates a fraudulent Web3 MetaMask verification page asking for 12 secret recovery seed words.
+          </p>
+          <div class="scenario-signals-preview">
+            Expected: Critical Crypto Harvest Signal • Instant Red Alert
+          </div>
+          <a href="scenarios/fake-crypto.html" target="_blank" class="btn-launch">
+            <span>🚀 Open Crypto Scenario</span>
+          </a>
+        </div>
+
+        <!-- Scenario 4 -->
+        <div class="scenario-card">
+          <span class="scenario-tag warning">Homoglyph Attack</span>
+          <h3 class="scenario-title">4. IDN / Cyrillic Lookalike</h3>
+          <p class="scenario-desc">
+            Simulates an Apple ID login with internationalized lookalike characters (Cyrillic mimicking Latin) and brand title deception.
+          </p>
+          <div class="scenario-signals-preview">
+            Expected: Punycode / Homoglyph Warning • Caution Flag
+          </div>
+          <a href="scenarios/idn-homoglyph.html" target="_blank" class="btn-launch">
+            <span>🚀 Open Homoglyph Scenario</span>
+          </a>
+        </div>
+
+        <!-- Scenario 5: Benign Neutral -->
+        <div class="scenario-card">
+          <span class="scenario-tag neutral">Neutral Assessment</span>
+          <h3 class="scenario-title">5. Benign Personal Tech Blog</h3>
+          <p class="scenario-desc">
+            Simulates a benign personal developer blog. Verifies that Veridex AI displays a Neutral status without guaranteeing safety.
+          </p>
+          <div class="scenario-signals-preview">
+            Expected: Neutral Status (Unverified) • No Warning Modal • "Not guaranteed safe"
+          </div>
+          <a href="scenarios/neutral-sample.html" target="_blank" class="btn-launch neutral-btn">
+            <span>🌐 Open Neutral Scenario</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="test-lab.js"></script>
+</body>
+</html>

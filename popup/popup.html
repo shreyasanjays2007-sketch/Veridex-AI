@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Veridex AI</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="veridex-app">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="brand-group">
+        <div class="logo-box">
+          <img src="../icons/icon32.png" alt="Veridex AI" class="logo-img">
+          <span class="live-dot" title="Real-Time Protection Active"></span>
+        </div>
+        <div>
+          <h1 class="brand-name">Veridex AI</h1>
+          <p class="brand-tagline">Web Safety & Scam Verification</p>
+        </div>
+      </div>
+      <div class="status-indicator-pill" id="header-status-pill">
+        <span class="pulse-indicator"></span>
+        <span id="protection-status-text">Active</span>
+      </div>
+    </header>
+
+    <!-- TOP SECTION 1: SEARCH & VERIFY BAR -->
+    <section class="top-search-section">
+      <div class="search-input-wrapper">
+        <span class="search-icon">🔍</span>
+        <input 
+          type="text" 
+          id="search-url-input" 
+          placeholder="Enter or paste any URL (e.g. paypal-login.com)..." 
+          spellcheck="false"
+          autocomplete="off"
+        >
+        <button id="btn-clear-search" class="btn-clear-input" title="Clear input" style="display: none;">✕</button>
+        <button id="btn-verify-search" class="btn-verify-action">Verify</button>
+      </div>
+
+      <div class="quick-action-bar">
+        <button id="btn-use-active-tab" class="action-chip" title="Scan current active browser tab">
+          <span class="chip-icon">🌐</span>
+          <span>Inspect Active Tab</span>
+        </button>
+        <button id="btn-quick-paste" class="action-chip" title="Paste URL from clipboard">
+          <span class="chip-icon">📋</span>
+          <span>Paste & Scan</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- TOP SECTION 2: DETECTION SCORE & RISK CARD -->
+    <section class="top-score-section">
+      <div class="hero-score-card neutral" id="hero-score-card">
+        <!-- Target Info Row -->
+        <div class="target-meta-row">
+          <div class="protocol-host-group">
+            <span class="protocol-badge" id="hero-protocol">HTTPS</span>
+            <span class="target-hostname" id="hero-hostname" title="Currently inspected host">Analyzing destination...</span>
+          </div>
+          <span class="db-status-tag" id="hero-db-tag">⚡ Multi-Vector Heuristics</span>
+        </div>
+
+        <!-- Score & Meter Row -->
+        <div class="score-main-row">
+          <div class="gauge-wrapper">
+            <svg class="radial-gauge" viewBox="0 0 100 100">
+              <circle class="gauge-bg" cx="50" cy="50" r="42"></circle>
+              <circle class="gauge-bar" id="gauge-progress-bar" cx="50" cy="50" r="42" stroke-dasharray="264" stroke-dashoffset="264"></circle>
+            </svg>
+            <div class="gauge-text-overlay">
+              <span class="gauge-pct" id="hero-score-value">0%</span>
+              <span class="gauge-label">RISK</span>
+            </div>
+          </div>
+
+          <div class="verdict-meta-block">
+            <div class="verdict-badge-pill" id="hero-verdict-badge">Inspecting...</div>
+            <p class="verdict-summary-text" id="hero-summary-text">Analyzing website security and reputation...</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SUGGESTED AUTHENTIC WEBSITE & THREAT ADVISORY CARD -->
+    <section id="popup-suggested-card" class="popup-suggested-card" style="display: none;">
+      <div class="popup-suggested-header">
+        <span class="popup-suggested-pill">🛡️ Suggested Authentic Website</span>
+        <span class="popup-suggested-brand" id="popup-suggested-brand">Official Destination</span>
+      </div>
+      <div class="popup-suggested-desc" id="popup-suggested-desc">
+        We detected this site is not safe. The legitimate official website is available below:
+      </div>
+      <a id="popup-suggested-btn" class="popup-suggested-btn" href="#" target="_blank">
+        <span id="popup-suggested-btn-label">👉 Go to Official Website Safely</span>
+      </a>
+      <div class="popup-why-unsafe-box" id="popup-why-unsafe-box">
+        <div class="popup-why-title">⚠️ Why this site is NOT safe:</div>
+        <div class="popup-why-list" id="popup-why-list"></div>
+      </div>
+    </section>
+
+    <!-- EVERYTHING ELSE BELOW IT: SUB-NAVIGATION -->
+    <nav class="sub-nav-tabs">
+      <button class="sub-tab-btn active" data-subtab="tab-signals">
+        <span class="tab-label">Flags</span>
+        <span class="badge-count" id="flags-badge-count">0</span>
+      </button>
+      <button class="sub-tab-btn" data-subtab="tab-breakdown">
+        <span class="tab-label">Risk Breakdown</span>
+      </button>
+      <button class="sub-tab-btn" data-subtab="tab-intel">
+        <span class="tab-label">Intelligence & DB</span>
+      </button>
+      <button class="sub-tab-btn" data-subtab="tab-cookies">
+        <span class="tab-label">Cookies</span>
+        <span class="badge-count" id="cookies-badge-count">0</span>
+      </button>
+      <button class="sub-tab-btn" data-subtab="tab-samples">
+        <span class="tab-label">Test Samples</span>
+      </button>
+      <button class="sub-tab-btn" data-subtab="tab-cybercrime">
+        <span class="tab-label">Report Cybercrime</span>
+      </button>
+      <button class="sub-tab-btn" data-subtab="tab-settings">
+        <span class="tab-label">Settings</span>
+      </button>
+    </nav>
+
+    <!-- SUB-PANEL CONTENT AREA -->
+    <main class="sub-panels-container">
+      <!-- Panel 1: Security Signals & Heuristics -->
+      <section id="tab-signals" class="sub-panel active">
+        <div class="panel-section-header">
+          <span class="section-title">Detected Security Indicators</span>
+          <span class="section-badge" id="signals-header-count">0 Flags Detected</span>
+        </div>
+        <div class="signals-list-box" id="signals-list-box">
+          <div class="signal-item clean">
+            <span class="sig-status-icon">✓</span>
+            <div>
+              <div class="sig-name">Connection & Domain Integrity Normal</div>
+              <div class="sig-desc">Active SSL encryption, authentic brand registration, and no lookalike homoglyphs detected.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Panel 2: Multi-Factor Risk Breakdown -->
+      <section id="tab-breakdown" class="sub-panel">
+        <div class="panel-section-header">
+          <span class="section-title">Multi-Category Risk Assessment</span>
+          <span class="section-badge">Varying Vector Scores</span>
+        </div>
+        <p class="breakdown-intro">Risk is calculated dynamically across 4 core security vectors rather than a static single check:</p>
+
+        <div class="category-bars-list">
+          <div class="cat-bar-item">
+            <div class="cat-bar-header">
+              <span class="cat-title">🌐 Domain Authority & TLD Risk</span>
+              <span class="cat-val" id="cat-val-domain">0/100</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" id="cat-bar-domain" style="width: 0%;"></div>
+            </div>
+          </div>
+
+          <div class="cat-bar-item">
+            <div class="cat-bar-header">
+              <span class="cat-title">🔤 Lexical & Brand Spoofing</span>
+              <span class="cat-val" id="cat-val-lexical">0/100</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" id="cat-bar-lexical" style="width: 0%;"></div>
+            </div>
+          </div>
+
+          <div class="cat-bar-item">
+            <div class="cat-bar-header">
+              <span class="cat-title">🔒 Connection & SSL Security</span>
+              <span class="cat-val" id="cat-val-security">0/100</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" id="cat-bar-security" style="width: 0%;"></div>
+            </div>
+          </div>
+
+          <div class="cat-bar-item">
+            <div class="cat-bar-header">
+              <span class="cat-title">🛡️ Page Forms & Input Safety</span>
+              <span class="cat-val" id="cat-val-content">0/100</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" id="cat-bar-content" style="width: 0%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="risk-scale-legend">
+          <span class="legend-chip safe">0-5% Safe</span>
+          <span class="legend-chip neutral">6-20% Low</span>
+          <span class="legend-chip caution">21-34% Caution</span>
+          <span class="legend-chip warning">35-59% Suspicious</span>
+          <span class="legend-chip danger">60-98% Threat</span>
+        </div>
+      </section>
+
+      <!-- Panel 3: Domain Intelligence & Database Verification -->
+      <section id="tab-intel" class="sub-panel">
+        <div class="panel-section-header">
+          <span class="section-title">Threat Intelligence & Verification</span>
+        </div>
+
+        <div class="intel-cards-grid">
+          <div class="intel-card">
+            <span class="intel-label">Database Match</span>
+            <span class="intel-value" id="intel-db-match">Heuristic Evaluation</span>
+          </div>
+          <div class="intel-card">
+            <span class="intel-label">Apex Domain</span>
+            <span class="intel-value" id="intel-apex">-</span>
+          </div>
+          <div class="intel-card">
+            <span class="intel-label">TLD Abuse Risk</span>
+            <span class="intel-value" id="intel-tld">-</span>
+          </div>
+          <div class="intel-card">
+            <span class="intel-label">Homoglyph / Punycode</span>
+            <span class="intel-value" id="intel-homoglyph">Clean</span>
+          </div>
+        </div>
+
+        <!-- Live Server Probe Details -->
+        <div class="live-probe-card" id="intel-live-probe-box">
+          <div class="probe-title">🌐 Live Network Verification</div>
+          <div class="probe-metrics-row">
+            <span class="probe-pill" id="probe-status-pill">Server: Checking...</span>
+            <span class="probe-pill" id="probe-hsts-pill">HSTS: Checking...</span>
+            <span class="probe-pill" id="probe-parked-pill">Parked: Checking...</span>
+          </div>
+        </div>
+
+        <!-- Offline IP Intelligence & Hosting Risk Analysis -->
+        <div class="live-probe-card" id="intel-ip-box" style="margin-top: 10px;">
+          <div class="probe-title">🛰️ Offline IP Intelligence & Hosting Risk</div>
+          <div class="intel-cards-grid" style="margin-top: 8px;">
+            <div class="intel-card">
+              <span class="intel-label">Resolved Server IP</span>
+              <span class="intel-value" id="intel-ip-addr">Checking...</span>
+            </div>
+            <div class="intel-card">
+              <span class="intel-label">Hosting Provider / Org</span>
+              <span class="intel-value" id="intel-ip-org">-</span>
+            </div>
+            <div class="intel-card">
+              <span class="intel-label">ASN</span>
+              <span class="intel-value" id="intel-ip-asn">-</span>
+            </div>
+            <div class="intel-card">
+              <span class="intel-label">Country / Geo</span>
+              <span class="intel-value" id="intel-ip-geo">-</span>
+            </div>
+          </div>
+          <div id="intel-ip-threat-status" class="probe-pill" style="margin-top: 8px; display: block; text-align: center;">
+            Offline IP analysis: Ready
+          </div>
+        </div>
+
+        <div class="full-url-display">
+          <span class="url-label">Inspected URL:</span>
+          <span class="url-text" id="intel-full-url">-</span>
+        </div>
+
+        <div style="margin-top: 12px;">
+          <button id="btn-popup-print-report" style="width: 100%; padding: 8px 12px; font-size: 11.5px; font-weight: 700; background: #0284c7; color: #fff; border: none; border-radius: 6px; cursor: pointer;">
+            🖨️ Print Security Audit Report
+          </button>
+        </div>
+      </section>
+
+      <!-- Panel: Cookie Security Analysis -->
+      <section id="tab-cookies" class="sub-panel">
+        <div class="panel-section-header">
+          <span class="section-title">🍪 Cookie Security & Privacy</span>
+          <span class="section-badge" id="cookies-header-badge">0 Cookies</span>
+        </div>
+
+        <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 8px 10px; font-size: 11px; color: #166534; line-height: 1.4; margin-bottom: 10px;">
+          <strong>🔒 Zero-Telemetry Privacy:</strong>
+          Actual cookie values are <strong>never displayed, stored, or transmitted</strong>. Analysis evaluates metadata only (Secure, HttpOnly, SameSite, domain, and expiry).
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px;">
+          <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 8px;">
+            <div style="font-size: 10px; color: #64748b; font-weight: 700; text-transform: uppercase;">Total Audited</div>
+            <div id="popup-cookie-total" style="font-size: 16px; font-weight: 800; color: #0f172a;">0</div>
+            <div id="popup-cookie-party-ratio" style="font-size: 10px; color: #475569;">0 1st-party / 0 3rd-party</div>
+          </div>
+          <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 8px;">
+            <div style="font-size: 10px; color: #64748b; font-weight: 700; text-transform: uppercase;">Security State</div>
+            <div id="popup-cookie-status" style="font-size: 13px; font-weight: 800; color: #16a34a;">Clean</div>
+            <div id="popup-cookie-flags" style="font-size: 10px; color: #475569;">0 Secure / 0 HttpOnly</div>
+          </div>
+        </div>
+
+        <details id="popup-cookie-issues-container" style="display: none; margin-bottom: 10px; background: #fffbeb; border: 1.5px solid #fde68a; border-radius: 6px; overflow: hidden;">
+          <summary style="padding: 7px 10px; font-size: 11.5px; font-weight: 800; color: #92400e; cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; background: #fefce8;">
+            <span style="display: flex; align-items: center; gap: 6px;">
+              <span>📁</span>
+              <span>Insecure Configurations (<span id="popup-cookie-issues-count">0</span>)</span>
+            </span>
+            <span style="font-size: 10px; color: #b45309;">▼</span>
+          </summary>
+          <div id="popup-cookie-issues-list" style="display: flex; flex-direction: column; gap: 6px; padding: 8px 10px; border-top: 1px solid #fde68a; background: #ffffff;"></div>
+        </details>
+
+        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden;">
+          <div style="background: #f8fafc; padding: 6px 10px; border-bottom: 1px solid #e2e8f0; font-size: 11px; font-weight: 700; color: #334155; display: flex; justify-content: space-between;">
+            <span>Audited Cookies</span>
+            <span style="font-size: 9.5px; color: #166534; font-weight: 700;">Values Redacted</span>
+          </div>
+          <div id="popup-cookie-list" style="max-height: 180px; overflow-y: auto; padding: 6px 8px; font-size: 11px;">
+            <div style="color: #64748b; text-align: center; padding: 12px;">No active cookies detected for this URL.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Panel 4: Quick Test Samples & Controlled Lab -->
+      <section id="tab-samples" class="sub-panel">
+        <div class="panel-section-header">
+          <span class="section-title">One-Click Detection Tests</span>
+        </div>
+        <p class="samples-desc">Click any preset to verify dynamic score variation across real, caution, and scam domains:</p>
+
+        <div class="sample-group">
+          <div class="sample-group-title">Official Government Portals (0% Risk)</div>
+          <div class="chips-container">
+            <button class="test-chip-btn verified" data-url="https://cybercrime.gov.in">cybercrime.gov.in</button>
+            <button class="test-chip-btn verified" data-url="https://incometax.gov.in">incometax.gov.in</button>
+            <button class="test-chip-btn verified" data-url="https://uidai.gov.in">uidai.gov.in</button>
+            <button class="test-chip-btn verified" data-url="https://parivahan.gov.in">parivahan.gov.in</button>
+          </div>
+        </div>
+
+        <div class="sample-group">
+          <div class="sample-group-title">Verified Authentic Sites (0% Risk)</div>
+          <div class="chips-container">
+            <button class="test-chip-btn verified" data-url="https://www.google.co.in">google.co.in</button>
+            <button class="test-chip-btn verified" data-url="https://en.wikipedia.org">wikipedia.org</button>
+            <button class="test-chip-btn verified" data-url="https://www.amazon.in">amazon.in</button>
+            <button class="test-chip-btn verified" data-url="https://chase.com">chase.com</button>
+          </div>
+        </div>
+
+        <div class="sample-group">
+          <div class="sample-group-title">Varying Heuristic & Caution Sites (20-40% Risk)</div>
+          <div class="chips-container">
+            <button class="test-chip-btn caution" data-url="https://alexrivera-dev.org">alexrivera-dev.org</button>
+            <button class="test-chip-btn caution" data-url="http://example-blog.com">http://example-blog</button>
+            <button class="test-chip-btn caution" data-url="https://discount-shop.xyz">discount-shop.xyz</button>
+          </div>
+        </div>
+
+        <div class="sample-group">
+          <div class="sample-group-title">Phishing, Combosquats & Scams (55-98% Risk)</div>
+          <div class="chips-container">
+            <button class="test-chip-btn danger" data-url="www.scam.com">scam.com</button>
+            <button class="test-chip-btn danger" data-url="http://fake-apple-login.com">fake-apple</button>
+            <button class="test-chip-btn danger" data-url="http://paypal-security-update.com">paypal-phish</button>
+            <button class="test-chip-btn danger" data-url="http://free-robux-generator.net">free-robux</button>
+            <button class="test-chip-btn danger" data-url="http://crypto-airdrop-claim.xyz">crypto-airdrop</button>
+            <button class="test-chip-btn danger" data-url="http://fake-gov.in">fake-gov.in</button>
+            <button class="test-chip-btn danger" data-url="https://cybercrime.gov.in.attacker.xyz">gov-spoof</button>
+          </div>
+        </div>
+
+        <div class="lab-launch-box">
+          <button id="btn-launch-lab" class="btn-lab-action">🧪 Open Controlled Simulation Lab</button>
+        </div>
+      </section>
+
+      <!-- Panel 5: Government Cybercrime Reporting -->
+      <section id="tab-cybercrime" class="sub-panel">
+        <div class="panel-section-header">
+          <span class="section-title">🏛️ Report Cybercrime (India)</span>
+          <span class="section-badge" style="background:#e0f2fe; color:#0369a1; border:1px solid #bae6fd;">National Portal</span>
+        </div>
+        
+        <div style="background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%); border: 1px solid #bae6fd; border-radius: 8px; padding: 10px 12px; margin-bottom: 10px;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="font-size: 22px;">🇮🇳</span>
+            <div>
+              <div style="font-size: 12px; font-weight: 800; color: #0c4a6e;">National Cyber Crime Reporting Portal</div>
+              <div style="font-size: 10.5px; color: #0284c7; font-weight: 600;">Government of India • Helpline 1930</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background: #fffbeb; border: 1px solid #fde68a; border-radius: 6px; padding: 8px 10px; font-size: 11px; color: #78350f; line-height: 1.45; margin-bottom: 10px;">
+          <strong>⚠️ Zero Telemetry Notice:</strong>
+          Veridex AI operates 100% offline and <strong>never automatically transmits browsing data or personal information</strong>. You must submit your complaint yourself through official government channels.
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px;">
+          <a href="https://cybercrime.gov.in/" target="_blank" rel="noopener noreferrer" style="display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; background: #0284c7; color: #ffffff; text-decoration: none; border-radius: 6px; font-weight: 700; font-size: 12px;">
+            <span>🌐 Open cybercrime.gov.in</span>
+            <span>↗</span>
+          </a>
+          <a href="tel:1930" style="display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; background: #059669; color: #ffffff; text-decoration: none; border-radius: 6px; font-weight: 700; font-size: 12px;">
+            <span>📞 Call Helpline 1930 (Financial Frauds)</span>
+            <span>📞</span>
+          </a>
+        </div>
+
+        <div style="margin-top: 10px;">
+          <button id="btn-popup-copy-evidence" style="width: 100%; padding: 8px 10px; font-size: 11px; font-weight: 700; background: #334155; color: #f8fafc; border: 1px solid #475569; border-radius: 6px; cursor: pointer;">
+            📋 Copy Inspected Site Evidence to Clipboard
+          </button>
+        </div>
+
+        <div style="margin-top: 10px; padding: 8px 10px; background: #f1f5f9; border-radius: 6px; font-size: 10px; color: #64748b; line-height: 1.4;">
+          ℹ️ Veridex AI operates offline using curated datasets. It does not claim to recognise every government entity or emerging phishing website worldwide. Always verify independently.
+        </div>
+      </section>
+
+      <!-- Panel 5: Settings -->
+      <section id="tab-settings" class="sub-panel">
+        <div class="settings-list">
+          <div class="setting-item">
+            <div class="setting-text">
+              <span class="setting-title">Real-Time Navigation Monitor</span>
+              <span class="setting-subtitle">Evaluates all link visits locally in background.</span>
+            </div>
+            <label class="switch-toggle">
+              <input type="checkbox" id="toggle-realtime" checked>
+              <span class="slider-toggle"></span>
+            </label>
+          </div>
+
+          <div class="setting-item">
+            <div class="setting-text">
+              <span class="setting-title">In-Page Warning Alert Modal</span>
+              <span class="setting-subtitle">Shows full overlay on high-risk phishing sites.</span>
+            </div>
+            <label class="switch-toggle">
+              <input type="checkbox" id="toggle-inpage-modal" checked>
+              <span class="slider-toggle"></span>
+            </label>
+          </div>
+
+          <div class="setting-item">
+            <div class="setting-text">
+              <span class="setting-title">Desktop Threat Notifications</span>
+              <span class="setting-subtitle">Push alert on severe credential theft lures.</span>
+            </div>
+            <label class="switch-toggle">
+              <input type="checkbox" id="toggle-desktop-notify" checked>
+              <span class="slider-toggle"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="privacy-badge-box">
+          <span class="privacy-icon">🔒</span>
+          <div>
+            <strong>100% On-Device AI Architecture</strong>
+            <p>Veridex AI performs all lexical analysis, Levenshtein distance metrics, and threat feed lookups entirely within your browser. Zero URLs or browsing histories are ever transmitted to any external server.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Website Link Action Bar at the end of the extension -->
+    <div class="popup-website-section" style="padding: 8px 12px; background: #faf7f2; border-top: 1px solid #e7ded0; display: flex; justify-content: center;">
+      <button id="btn-popup-open-website" class="btn-popup-website" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 8px 14px; background: #8a4920; color: #ffffff; border: none; border-radius: 8px; font-weight: 700; font-size: 12px; cursor: pointer; transition: background 0.2s;">
+        <span>🌐 Open Veridex AI Website</span>
+        <span style="font-size: 11px;">↗</span>
+      </button>
+    </div>
+
+    <!-- App Footer -->
+    <footer class="app-footer">
+      <span>🔒 100% On-Device Processing</span>
+      <span>•</span>
+      <span>Zero Cloud Telemetry</span>
+      <span>•</span>
+      <span>v2.0</span>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
