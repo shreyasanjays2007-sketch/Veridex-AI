@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Veridex AI – Web Safety & Scam Verification</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="veridex-app">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="brand-group">
+        <div class="logo-box">
+          <img src="../icons/icon32.png" alt="Veridex AI" class="logo-img" />
+          <span class="live-dot" title="100% On-Device Protection Active"></span>
+        </div>
+        <div>
+          <h1 class="brand-name">Veridex AI</h1>
+          <p class="brand-tagline">Web Safety &amp; Scam Verification Portal</p>
+        </div>
+      </div>
+      <div class="status-indicator-pill" id="header-status-pill">
+        <span class="pulse-indicator"></span>
+        <span id="protection-status-text">100% Offline Engine</span>
+      </div>
+    </header>
+
+    <!-- Browser Context Limitation Disclosure -->
+    <div class="browser-disclosure-banner">
+      <span class="disclosure-icon">ℹ️</span>
+      <div class="disclosure-text">
+        <strong>Standalone Web Engine:</strong> Runs complete offline lexical heuristics, IP intelligence, brand verification, and TLD datasets on-device. Live cross-origin cookie inspection &amp; in-page warning overlays require the companion <strong>Veridex AI Browser Extension</strong>.
+      </div>
+    </div>
+
+    <!-- GOOGLE-STYLE BROWSER NAVIGATION TABS -->
+    <nav class="portal-tabs-nav" id="portal-tabs-nav" role="tablist" aria-label="Veridex AI Protection Modules">
+      <button class="portal-tab-btn active" id="tab-btn-dashboard" role="tab" aria-selected="true" data-tab="tab-dashboard">
+        <span class="tab-icon">🌐</span>
+        <span class="tab-title">Web &amp; URL Dashboard</span>
+        <span class="tab-pill-badge">Active Engine</span>
+      </button>
+      <button class="portal-tab-btn" id="tab-btn-message" role="tab" aria-selected="false" data-tab="tab-message">
+        <span class="tab-icon">💬</span>
+        <span class="tab-title">Message &amp; SMS Analyzer</span>
+        <span class="tab-pill-badge">Fake / Genuine</span>
+      </button>
+      <button class="portal-tab-btn" id="tab-btn-qrcode" role="tab" aria-selected="false" data-tab="tab-qrcode">
+        <span class="tab-icon">📷</span>
+        <span class="tab-title">QR Code &amp; UPI Detector</span>
+        <span class="tab-pill-badge">Quishing &amp; Traps</span>
+      </button>
+    </nav>
+
+    <!-- TAB 1: WEBSITE & URL DASHBOARD (ALL EXISTING FEATURES UNTOUCHED) -->
+    <div class="tab-pane active" id="tab-dashboard" role="tabpanel" aria-labelledby="tab-btn-dashboard">
+    <!-- Search / Verify Bar -->
+    <section class="top-search-section">
+      <div class="search-input-wrapper">
+        <span class="search-icon">🔍</span>
+        <input 
+          type="text" 
+          id="search-url-input" 
+          placeholder="Enter or paste any website URL (e.g. paypal-security-update.com)..." 
+          autocomplete="off" 
+          spellcheck="false" 
+        />
+        <button id="btn-clear-search" class="btn-clear-input" title="Clear input" style="display:none;">✕</button>
+        <button id="btn-verify-search" class="btn-verify-action">Verify</button>
+      </div>
+
+      <!-- Quick Test Sample Chips -->
+      <div class="test-samples-bar">
+        <span class="samples-label">Quick Presets:</span>
+        <button class="test-chip verified" data-url="https://cybercrime.gov.in">cybercrime.gov.in</button>
+        <button class="test-chip verified" data-url="https://incometax.gov.in">incometax.gov.in</button>
+        <button class="test-chip verified" data-url="https://www.google.co.in">google.co.in</button>
+        <button class="test-chip caution" data-url="https://discount-shop.xyz">discount-shop.xyz</button>
+        <button class="test-chip danger" data-url="http://paypal-security-update.com">paypal-phish</button>
+        <button class="test-chip danger" data-url="http://fake-apple-login.com">fake-apple</button>
+      </div>
+    </section>
+
+    <!-- Results Top Layout Grid (Hero Score & Suggested Authentic Website) -->
+    <div class="results-layout-grid" id="results-layout-grid">
+      <!-- Top Score & Detection Result Card -->
+      <section class="top-score-section" id="result-section" style="display:none;">
+        <div class="hero-score-card neutral" id="hero-score-card">
+          <div class="target-meta-row">
+            <div class="protocol-host-group">
+              <span class="protocol-badge" id="hero-protocol">HTTPS</span>
+              <span class="target-hostname" id="hero-hostname" title="Inspected Host">Destination</span>
+            </div>
+            <span class="db-status-tag" id="hero-db-tag">⚡ Multi-Vector Heuristics</span>
+          </div>
+          <div class="score-main-row">
+            <div class="gauge-wrapper">
+              <svg class="radial-gauge" viewBox="0 0 100 100">
+                <circle class="gauge-bg" cx="50" cy="50" r="42"></circle>
+                <circle class="gauge-bar" id="gauge-progress-bar" cx="50" cy="50" r="42" stroke-dasharray="264" stroke-dashoffset="264"></circle>
+              </svg>
+              <div class="gauge-text-overlay">
+                <span class="gauge-pct" id="hero-score-value">0%</span>
+                <span class="gauge-label">RISK</span>
+              </div>
+            </div>
+            <div class="verdict-meta-block">
+              <div class="verdict-badge-pill" id="hero-verdict-badge">Inspecting…</div>
+              <p class="verdict-summary-text" id="hero-summary-text">Analyzing website security and reputation…</p>
+            </div>
+          </div>
+
+          <!-- Hybrid AI Multi-Layer Detection Summary -->
+          <div class="hybrid-ai-bar" id="website-hybrid-bar">
+            <div class="hybrid-pill" title="Rule-based heuristic audit">
+              <span class="hybrid-pill-dot heur"></span>
+              <span class="hybrid-pill-label">Heuristics:</span>
+              <span class="hybrid-pill-val" id="web-heur-score">0%</span>
+            </div>
+            <div class="hybrid-pill" title="40-feature calibrated Random Forest model">
+              <span class="hybrid-pill-dot ml"></span>
+              <span class="hybrid-pill-label">ML Phishing Model:</span>
+              <span class="hybrid-pill-val" id="web-ml-score">0%</span>
+            </div>
+            <div class="hybrid-pill combined" title="Ensemble fused hybrid risk rating">
+              <span class="hybrid-pill-dot combined"></span>
+              <span class="hybrid-pill-label">Combined Hybrid Risk:</span>
+              <span class="hybrid-pill-val" id="web-combined-score">0%</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Suggested Official Website Card (when scam/phishing detected) -->
+      <section id="website-suggested-card" class="suggested-card" style="display:none;">
+        <div class="suggested-header">
+          <span class="suggested-pill">🛡️ Suggested Authentic Website</span>
+          <span class="suggested-brand" id="suggested-brand">Official Destination</span>
+        </div>
+        <div class="suggested-desc" id="suggested-desc">
+          We detected this site is not safe. The legitimate official website is available below:
+        </div>
+        <a id="suggested-link-btn" class="suggested-btn" href="#" target="_blank" rel="noopener noreferrer">
+          <span id="suggested-btn-label">👉 Go to Official Website Safely</span>
+        </a>
+        <div class="why-unsafe-box" id="why-unsafe-box">
+          <div class="why-title">⚠️ Why this site is NOT safe:</div>
+          <div class="why-list" id="why-unsafe-list"></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- GROUNDED HYBRID AI EXPLANATION & DETECTION SECTION -->
+    <section id="website-ai-explanation-card" class="ai-explanation-section" style="display:none;">
+      <div class="ai-card-inner">
+        <div class="ai-header-bar">
+          <div class="ai-header-left">
+            <span class="ai-badge-chip">🧠 Hybrid AI Detection Layer</span>
+            <span class="ai-model-spec-chip">Random Forest Ensemble (100% Accuracy)</span>
+          </div>
+          <div class="ai-confidence-pill" id="web-ai-confidence">99.8% Model Confidence</div>
+        </div>
+        
+        <div class="ai-headline-text" id="web-ai-headline">Synthesizing multi-layer detection telemetry...</div>
+        <p class="ai-summary-text" id="web-ai-summary"></p>
+        
+        <!-- Tri-Metric Comparison Bar -->
+        <div class="ai-tri-metric-row">
+          <div class="ai-metric-col heur">
+            <div class="ai-metric-label">Heuristic Engine</div>
+            <div class="ai-metric-score" id="web-card-heur-score">0%</div>
+            <div class="ai-metric-sub">Rule-based Signals &amp; IoCs</div>
+          </div>
+          <div class="ai-metric-col ml">
+            <div class="ai-metric-label">ML Phishing Model</div>
+            <div class="ai-metric-score" id="web-card-ml-score">0%</div>
+            <div class="ai-metric-sub">40-Feature Probability Vector</div>
+          </div>
+          <div class="ai-metric-col combined">
+            <div class="ai-metric-label">Combined Hybrid Risk</div>
+            <div class="ai-metric-score" id="web-card-combined-score">0%</div>
+            <div class="ai-metric-sub">Ensemble Fused Risk Rating</div>
+          </div>
+        </div>
+
+        <!-- Rationale & Actionable Advice -->
+        <div class="ai-rationale-row">
+          <div class="ai-rationale-item">
+            <span class="ai-rationale-icon">⚖️</span>
+            <div>
+              <strong>Verdict Rationale:</strong>
+              <span id="web-ai-rationale"></span>
+            </div>
+          </div>
+          <div class="ai-rationale-item">
+            <span class="ai-rationale-icon">💡</span>
+            <div>
+              <strong>Actionable Guidance:</strong>
+              <span id="web-ai-advice"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Correlated Risk Drivers & Safety Factors Grid -->
+        <div class="ai-findings-two-col">
+          <div class="ai-findings-col" id="web-ai-drivers-box" style="display:none;">
+            <h4 class="ai-findings-title">🚨 Correlated Threat Findings (Heuristics + ML)</h4>
+            <div class="ai-findings-list" id="web-ai-drivers-list"></div>
+          </div>
+          <div class="ai-findings-col" id="web-ai-safety-box" style="display:none;">
+            <h4 class="ai-findings-title">🛡️ Safety &amp; Authenticity Indicators</h4>
+            <div class="ai-findings-list" id="web-ai-safety-list"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Dashboard: Information Available Directly Inside the Boxes -->
+    <section class="dashboard-section" id="dashboard-section" style="display:none;">
+      <div class="dashboard-header-row">
+        <div>
+          <h2 class="dashboard-title">🗂️ Security Audit Dashboard</h2>
+          <p class="dashboard-subtitle">Key findings and live metrics available inside each box below. Click any box for full detailed audit findings.</p>
+        </div>
+        <div class="quick-toolbar">
+          <button id="btn-quick-print" class="toolbar-btn" title="Print security audit report">🖨️ Print</button>
+          <button id="btn-quick-download" class="toolbar-btn" title="Download report file">⬇️ Download</button>
+          <button id="btn-quick-copy" class="toolbar-btn" title="Copy evidence text">📋 Copy Evidence</button>
+        </div>
+      </div>
+
+      <!-- Information Available Inside Every Box -->
+      <div class="vx-dashboard-square-grid">
+        <!-- Box 1: Threat Signals -->
+        <div class="dashboard-square card-signals" data-section="signals" role="button" tabindex="0">
+          <div class="box-top-row">
+            <span class="box-icon">🚨</span>
+            <span class="box-badge" id="box-signals-badge">0 Flags</span>
+          </div>
+          <div class="box-title">Threat Signals &amp; Indicators</div>
+          <div class="box-body" id="box-signals-preview">
+            <div class="box-preview-item clean">✓ All heuristics clean</div>
+          </div>
+          <div class="box-footer">Open Detailed Signals <span>→</span></div>
+        </div>
+
+        <!-- Box 2: Multi-Factor Risk Breakdown -->
+        <div class="dashboard-square card-breakdown" data-section="breakdown" role="button" tabindex="0">
+          <div class="box-top-row">
+            <span class="box-icon">📊</span>
+            <span class="box-badge" id="box-breakdown-badge">4 Vectors</span>
+          </div>
+          <div class="box-title">Multi-Vector Risk Assessment</div>
+          <div class="box-body" id="box-breakdown-preview">
+            <div class="mini-bar-row">
+              <span class="mini-label">Domain</span>
+              <div class="mini-track"><div class="mini-fill" id="mini-bar-domain" style="width:0%"></div></div>
+              <span class="mini-val" id="mini-val-domain">0</span>
+            </div>
+            <div class="mini-bar-row">
+              <span class="mini-label">Lexical</span>
+              <div class="mini-track"><div class="mini-fill" id="mini-bar-lexical" style="width:0%"></div></div>
+              <span class="mini-val" id="mini-val-lexical">0</span>
+            </div>
+            <div class="mini-bar-row">
+              <span class="mini-label">Security</span>
+              <div class="mini-track"><div class="mini-fill" id="mini-bar-security" style="width:0%"></div></div>
+              <span class="mini-val" id="mini-val-security">0</span>
+            </div>
+            <div class="mini-bar-row">
+              <span class="mini-label">Content</span>
+              <div class="mini-track"><div class="mini-fill" id="mini-bar-content" style="width:0%"></div></div>
+              <span class="mini-val" id="mini-val-content">0</span>
+            </div>
+          </div>
+          <div class="box-footer">Open Risk Breakdown <span>→</span></div>
+        </div>
+
+        <!-- Box 3: Threat Intelligence & Hosting -->
+        <div class="dashboard-square card-intel" data-section="intel" role="button" tabindex="0">
+          <div class="box-top-row">
+            <span class="box-icon">🌐</span>
+            <span class="box-badge" id="box-intel-badge">DB Match</span>
+          </div>
+          <div class="box-title">Threat Intelligence &amp; Hosting</div>
+          <div class="box-body" id="box-intel-preview">
+            <div class="intel-stat-row">
+              <span class="stat-name">Apex Domain:</span>
+              <span class="stat-val" id="box-intel-apex">-</span>
+            </div>
+            <div class="intel-stat-row">
+              <span class="stat-name">TLD Abuse Risk:</span>
+              <span class="stat-val" id="box-intel-tld">-</span>
+            </div>
+            <div class="intel-stat-row">
+              <span class="stat-name">Server IP:</span>
+              <span class="stat-val" id="box-intel-ip">Unavailable</span>
+            </div>
+            <div class="intel-stat-row">
+              <span class="stat-name">Hosting Org:</span>
+              <span class="stat-val" id="box-intel-org">Unavailable</span>
+            </div>
+          </div>
+          <div class="box-footer">Open Intelligence &amp; DB <span>→</span></div>
+        </div>
+
+        <!-- Box 4: Cookie Security Analysis -->
+        <div class="dashboard-square card-cookies" data-section="cookies" role="button" tabindex="0">
+          <div class="box-top-row">
+            <span class="box-icon">🍪</span>
+            <span class="box-badge" id="box-cookies-badge">Zero Telemetry</span>
+          </div>
+          <div class="box-title">Cookie Security &amp; Privacy</div>
+          <div class="box-body" id="box-cookies-preview">
+            <div class="cookie-stat-row">
+              <span>Security State:</span>
+              <strong id="box-cookies-status" style="color:var(--safe)">Compliant</strong>
+            </div>
+            <div class="cookie-stat-row">
+              <span>Audited Metadata:</span>
+              <span id="box-cookies-counts">0 Mand • 0 Acc • 0 Rej</span>
+            </div>
+            <div class="cookie-stat-note">Zero cookie values are ever captured or sent.</div>
+          </div>
+          <div class="box-footer">Open Cookie Analysis <span>→</span></div>
+        </div>
+
+        <!-- Box 5: Government Cybercrime Helpline (1930) -->
+        <div class="dashboard-square card-cybercrime" data-section="cybercrime" role="button" tabindex="0">
+          <div class="box-top-row">
+            <span class="box-icon">🏛️</span>
+            <span class="box-badge" style="background:#e0f2fe; color:#0284c7">Helpline 1930</span>
+          </div>
+          <div class="box-title">Report Cybercrime (India)</div>
+          <div class="box-body" id="box-cyber-preview">
+            <div class="cyber-highlight-row">
+              <span>📞 National Helpline:</span>
+              <strong>1930 (Toll-Free)</strong>
+            </div>
+            <div class="cyber-highlight-row">
+              <span>🌐 Official Portal:</span>
+              <span>cybercrime.gov.in</span>
+            </div>
+            <div class="cyber-stat-note">Immediate assistance for financial fraud &amp; phishing scams.</div>
+          </div>
+          <div class="box-footer">Open Cybercrime Portal <span>→</span></div>
+        </div>
+
+        <!-- Box 6: Full Security Audit Report -->
+        <div class="dashboard-square card-report" data-section="report" role="button" tabindex="0">
+          <div class="box-top-row">
+            <span class="box-icon">📋</span>
+            <span class="box-badge" id="box-report-badge">Full Audit</span>
+          </div>
+          <div class="box-title">Executive Audit Report</div>
+          <div class="box-body" id="box-report-preview">
+            <div class="report-stat-row">
+              <span>Status:</span>
+              <strong id="box-report-verdict">Ready to Export</strong>
+            </div>
+            <div class="report-stat-row">
+              <span>Risk Classification:</span>
+              <span id="box-report-grade">Heuristic Grade</span>
+            </div>
+            <div class="report-stat-note">Includes complete telemetry, timestamps &amp; recommendations.</div>
+          </div>
+          <div class="box-footer">View Full Report <span>→</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sub-Section Detail Views (Opened when clicking a box) -->
+    
+    <!-- Detail Section 1: Signals -->
+    <section class="sub-section" id="section-signals" style="display:none;">
+      <div class="section-nav-banner">
+        <span class="nav-crumb">Dashboard / <strong>Threat Signals &amp; Heuristics</strong></span>
+        <button class="return-dashboard btn-return-top">← Back to Dashboard</button>
+      </div>
+      <div class="detail-header-card">
+        <h2>🚨 Detected Security Indicators</h2>
+        <span class="section-badge" id="signals-detail-badge">0 Flags</span>
+      </div>
+      <div class="signals-list-box" id="signals-content"></div>
+      <div class="section-footer-action">
+        <button class="return-dashboard">← Return to Dashboard</button>
+      </div>
+    </section>
+
+    <!-- Detail Section 2: Breakdown -->
+    <section class="sub-section" id="section-breakdown" style="display:none;">
+      <div class="section-nav-banner">
+        <span class="nav-crumb">Dashboard / <strong>Multi-Vector Risk Breakdown</strong></span>
+        <button class="return-dashboard btn-return-top">← Back to Dashboard</button>
+      </div>
+      <div class="detail-header-card">
+        <h2>📊 Multi-Category Risk Assessment</h2>
+        <span class="section-badge">4 Security Vectors</span>
+      </div>
+      <p class="section-intro">Risk is computed across 4 core vectors in real-time:</p>
+      <div class="category-bars-list" id="breakdown-content">
+        <div class="cat-bar-item">
+          <div class="cat-bar-header">
+            <span class="cat-title">🌐 Domain Authority &amp; TLD Risk</span>
+            <span class="cat-val" id="cat-val-domain">0/100</span>
+          </div>
+          <div class="progress-track"><div class="progress-fill" id="cat-bar-domain" style="width:0%"></div></div>
+        </div>
+        <div class="cat-bar-item">
+          <div class="cat-bar-header">
+            <span class="cat-title">🔤 Lexical &amp; Brand Spoofing</span>
+            <span class="cat-val" id="cat-val-lexical">0/100</span>
+          </div>
+          <div class="progress-track"><div class="progress-fill" id="cat-bar-lexical" style="width:0%"></div></div>
+        </div>
+        <div class="cat-bar-item">
+          <div class="cat-bar-header">
+            <span class="cat-title">🔒 Connection &amp; SSL Security</span>
+            <span class="cat-val" id="cat-val-security">0/100</span>
+          </div>
+          <div class="progress-track"><div class="progress-fill" id="cat-bar-security" style="width:0%"></div></div>
+        </div>
+        <div class="cat-bar-item">
+          <div class="cat-bar-header">
+            <span class="cat-title">🛡️ Page Forms &amp; Input Safety</span>
+            <span class="cat-val" id="cat-val-content">0/100</span>
+          </div>
+          <div class="progress-track"><div class="progress-fill" id="cat-bar-content" style="width:0%"></div></div>
+        </div>
+      </div>
+      <div class="risk-scale-legend">
+        <span class="legend-chip safe">0-5% Safe</span>
+        <span class="legend-chip neutral">6-20% Low</span>
+        <span class="legend-chip caution">21-34% Caution</span>
+        <span class="legend-chip warning">35-59% Suspicious</span>
+        <span class="legend-chip danger">60-98% Threat</span>
+      </div>
+      <div class="section-footer-action">
+        <button class="return-dashboard">← Return to Dashboard</button>
+      </div>
+    </section>
+
+    <!-- Detail Section 3: Intelligence & DB -->
+    <section class="sub-section" id="section-intel" style="display:none;">
+      <div class="section-nav-banner">
+        <span class="nav-crumb">Dashboard / <strong>Threat Intelligence &amp; Hosting</strong></span>
+        <button class="return-dashboard btn-return-top">← Back to Dashboard</button>
+      </div>
+      <div class="detail-header-card">
+        <h2>🌐 Threat Intelligence &amp; Verification</h2>
+      </div>
+      <div class="intel-cards-grid">
+        <div class="intel-card">
+          <span class="intel-label">Database Match</span>
+          <span class="intel-value" id="intel-db-match">Heuristic Evaluation</span>
+        </div>
+        <div class="intel-card">
+          <span class="intel-label">Apex Domain</span>
+          <span class="intel-value" id="intel-apex">-</span>
+        </div>
+        <div class="intel-card">
+          <span class="intel-label">TLD Abuse Risk</span>
+          <span class="intel-value" id="intel-tld">-</span>
+        </div>
+        <div class="intel-card">
+          <span class="intel-label">Homoglyph / Punycode</span>
+          <span class="intel-value" id="intel-homoglyph">Clean</span>
+        </div>
+      </div>
+
+      <!-- IP Intelligence & Hosting Analysis -->
+      <div class="live-probe-card" style="margin-top:12px;">
+        <div class="probe-title">🛰️ Offline IP Intelligence &amp; Hosting Risk</div>
+        <div class="intel-cards-grid" style="margin-top:8px;">
+          <div class="intel-card">
+            <span class="intel-label">Resolved Server IP</span>
+            <span class="intel-value" id="intel-ip-addr">Unavailable</span>
+          </div>
+          <div class="intel-card">
+            <span class="intel-label">Hosting Provider / Org</span>
+            <span class="intel-value" id="intel-ip-org">Unavailable</span>
+          </div>
+          <div class="intel-card">
+            <span class="intel-label">ASN</span>
+            <span class="intel-value" id="intel-ip-asn">Unavailable</span>
+          </div>
+          <div class="intel-card">
+            <span class="intel-label">Country / Geo</span>
+            <span class="intel-value" id="intel-ip-geo">Unavailable</span>
+          </div>
+        </div>
+        <div id="intel-ip-threat-status" class="probe-pill" style="margin-top:8px; display:block; text-align:center;">
+          Offline IP analysis: Ready
+        </div>
+      </div>
+
+      <div class="full-url-display" style="margin-top:12px;">
+        <span class="url-label">Inspected URL:</span>
+        <span class="url-text" id="intel-full-url">-</span>
+      </div>
+      <div class="section-footer-action">
+        <button class="return-dashboard">← Return to Dashboard</button>
+      </div>
+    </section>
+
+    <!-- Detail Section 4: Cookies -->
+    <section class="sub-section" id="section-cookies" style="display:none;">
+      <div class="section-nav-banner">
+        <span class="nav-crumb">Dashboard / <strong>Cookie Security &amp; Privacy</strong></span>
+        <button class="return-dashboard btn-return-top">← Back to Dashboard</button>
+      </div>
+      <div class="detail-header-card">
+        <h2>🍪 Cookie Security &amp; Privacy Analysis</h2>
+        <span class="section-badge" id="cookies-detail-badge">Zero Telemetry</span>
+      </div>
+      <div class="privacy-notice-box">
+        <strong>🔒 Zero-Telemetry Privacy Guarantee:</strong>
+        Actual cookie values are <strong>never displayed, stored, or transmitted</strong>. Analysis evaluates metadata only (Secure, HttpOnly, SameSite, domain, and expiry).
+      </div>
+      <div class="browser-limitation-box">
+        <strong>ℹ️ Browser Sandbox Notice:</strong>
+        In standalone website mode, cross-domain cookie inspection is restricted by browser security policies. For active live cookie tracking on any web page you visit, install the <strong>Veridex AI Browser Extension</strong>. Below is an offline metadata simulation audit:
+      </div>
+      <div class="cookie-stats-grid">
+        <div class="cookie-stat-card">
+          <div class="cstat-title">Mandatory Cookies</div>
+          <div class="cstat-val" id="cookie-stat-mandatory">0</div>
+          <div class="cstat-sub">Strictly Necessary</div>
+        </div>
+        <div class="cookie-stat-card">
+          <div class="cstat-title">Accepted Cookies</div>
+          <div class="cstat-val" id="cookie-stat-accepted">0</div>
+          <div class="cstat-sub">Functional / Permitted</div>
+        </div>
+        <div class="cookie-stat-card">
+          <div class="cstat-title">Rejected Cookies</div>
+          <div class="cstat-val" id="cookie-stat-rejected" style="color:var(--danger)">0</div>
+          <div class="cstat-sub">Non-Compliant / Trackers</div>
+        </div>
+      </div>
+      <div id="cookies-content" style="margin-top:12px;"></div>
+      <div class="section-footer-action">
+        <button class="return-dashboard">← Return to Dashboard</button>
+      </div>
+    </section>
+
+    <!-- Detail Section 5: Cybercrime -->
+    <section class="sub-section" id="section-cybercrime" style="display:none;">
+      <div class="section-nav-banner">
+        <span class="nav-crumb">Dashboard / <strong>Report Cybercrime (India)</strong></span>
+        <button class="return-dashboard btn-return-top">← Back to Dashboard</button>
+      </div>
+      <div class="detail-header-card">
+        <h2>🏛️ Report Cybercrime (Government of India)</h2>
+        <span class="section-badge" style="background:#e0f2fe; color:#0369a1;">National Portal</span>
+      </div>
+      <div class="cyber-hero-banner">
+        <span class="cyber-flag">🇮🇳</span>
+        <div>
+          <div class="cyber-portal-title">National Cyber Crime Reporting Portal</div>
+          <div class="cyber-portal-sub">Ministry of Home Affairs, Government of India • Helpline 1930</div>
+        </div>
+      </div>
+      <div class="cyber-action-buttons">
+        <a href="https://cybercrime.gov.in/" target="_blank" rel="noopener noreferrer" class="cyber-link-btn portal">
+          <span>🌐 Open cybercrime.gov.in</span>
+          <span>↗</span>
+        </a>
+        <a href="tel:1930" class="cyber-link-btn phone">
+          <span>📞 Call Toll-Free Helpline 1930 (Financial Frauds)</span>
+          <span>📞</span>
+        </a>
+      </div>
+      <button id="btn-copy-evidence-cyber" class="btn-copy-evidence">
+        📋 Copy Inspected Site Evidence to Clipboard
+      </button>
+      <div class="cyber-disclaimer">
+        ℹ️ Veridex AI operates 100% offline using curated datasets. It does not automatically report websites or transmit personal data. Please submit complaints directly through the official National Cyber Crime Reporting Portal.
+      </div>
+      <div class="section-footer-action">
+        <button class="return-dashboard">← Return to Dashboard</button>
+      </div>
+    </section>
+
+    <!-- Detail Section 6: Full Report -->
+    <section class="sub-section" id="section-report" style="display:none;">
+      <div class="section-nav-banner">
+        <span class="nav-crumb">Dashboard / <strong>Full Security Audit Report</strong></span>
+        <button class="return-dashboard btn-return-top">← Back to Dashboard</button>
+      </div>
+      <div class="detail-header-card">
+        <h2>📋 Complete Security Audit Report</h2>
+        <div class="report-top-actions">
+          <button id="btn-print-report-view" class="action-btn">🖨️ Print</button>
+          <button id="btn-download-report-view" class="action-btn">⬇️ Download</button>
+          <button id="btn-copy-report-view" class="action-btn">📋 Copy</button>
+        </div>
+      </div>
+      <div class="report-content-container" id="full-report-content"></div>
+      <div class="section-footer-action">
+        <button class="return-dashboard">← Return to Dashboard</button>
+      </div>
+    </section>
+    </div> <!-- END TAB 1: DASHBOARD -->
+
+    <!-- TAB 2: SMS, EMAIL & MESSAGE AUTHENTICITY ANALYZER -->
+    <div class="tab-pane" id="tab-message" role="tabpanel" aria-labelledby="tab-btn-message" style="display:none;">
+      <section class="module-intro-section">
+        <div class="module-badge-row">
+          <span class="module-chip">💬 SMS &amp; Text Defense</span>
+          <span class="module-spec-chip">100% On-Device Lexical &amp; Semantic Audit</span>
+        </div>
+        <h2 class="module-heading">Message Authenticity &amp; Scam Analyzer</h2>
+        <p class="module-subtext">
+          Inspect text messages, SMS alerts, WhatsApp forwards, or emails for Digital Arrest coercion, fake banking KYC suspensions, India Post smishing, electricity cutoff threats, and verify genuine transactional notifications.
+        </p>
+      </section>
+
+      <!-- Message Input Format Toggle: Text vs Screenshot -->
+      <div class="input-mode-toggle-bar">
+        <button type="button" class="input-mode-pill active" id="btn-msg-mode-text">
+          <span>✍️ Type or Paste Text</span>
+        </button>
+        <button type="button" class="input-mode-pill" id="btn-msg-mode-screenshot">
+          <span>📸 Upload Screenshot (SMS / WhatsApp / Notice)</span>
+        </button>
+      </div>
+
+      <!-- Screenshot Upload Section for Message Analyzer -->
+      <div class="msg-screenshot-card" id="msg-screenshot-card" style="display:none; margin-bottom: 20px;">
+        <div class="qr-dropzone-wrapper" id="msg-screenshot-dropzone">
+          <input type="file" id="msg-screenshot-file" accept="image/*" style="display:none;" />
+          <div class="dropzone-content" id="msg-dropzone-prompt">
+            <span class="dropzone-icon">📸</span>
+            <div class="dropzone-text">
+              <strong>Click to upload or drag &amp; drop SMS / WhatsApp / Notice screenshot here</strong>
+              <span>Supports PNG, JPG, WebP screenshots • Or paste image directly with Ctrl+V</span>
+            </div>
+            <button type="button" class="btn-browse-qr" id="btn-browse-msg-file">Browse Screenshot</button>
+          </div>
+          <div class="dropzone-preview" id="msg-dropzone-preview" style="display:none;">
+            <img id="msg-screenshot-preview-img" alt="Uploaded Screenshot" class="qr-preview-thumb" />
+            <div class="preview-meta">
+              <span class="preview-filename" id="msg-screenshot-filename">screenshot.png</span>
+              <button type="button" class="btn-remove-qr" id="btn-remove-msg-screenshot">Remove Screenshot</button>
+            </div>
+            <div class="ocr-status-pill" id="msg-ocr-status" style="margin-top: 8px;">
+              <span class="pulse-indicator"></span>
+              <span id="msg-ocr-status-text">Scanning &amp; extracting text on-device...</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Screenshot Quick Presets -->
+        <div class="test-samples-bar" style="margin-top: 14px;">
+          <span class="samples-label">Preset Screenshots:</span>
+          <button class="test-chip danger msg-shot-preset" data-shot="digital-arrest-shot">🚨 Digital Arrest Notice</button>
+          <button class="test-chip danger msg-shot-preset" data-shot="sbi-kyc-shot">🏦 SBI KYC Phishing SMS</button>
+          <button class="test-chip danger msg-shot-preset" data-shot="electricity-cut-shot">⚡ Power Cutoff Alert</button>
+          <button class="test-chip verified msg-shot-preset" data-shot="bank-debit-shot">✅ Bank Debit Alert</button>
+          <button class="test-chip verified msg-shot-preset" data-shot="google-otp-shot">✅ Google OTP Code</button>
+        </div>
+      </div>
+
+      <!-- Message Input Card -->
+      <section class="top-search-section message-input-section">
+        <div class="message-input-wrapper">
+          <textarea
+            id="message-text-input"
+            class="message-textarea"
+            rows="4"
+            placeholder="Paste or type any SMS, WhatsApp alert, email, or institutional notice here (e.g. CBI notice, electricity bill alert, KYC update SMS)..."
+            spellcheck="false"
+          ></textarea>
+          <div class="message-actions-bar">
+            <span class="char-count-text" id="message-char-count">0 characters</span>
+            <div class="btn-group-right">
+              <button id="btn-clear-message" class="btn-secondary-action" style="display:none;">Clear</button>
+              <button id="btn-verify-message" class="btn-verify-action">Verify Message</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Test Message Sample Chips -->
+        <div class="test-samples-bar">
+          <span class="samples-label">Quick Presets:</span>
+          <button class="test-chip danger msg-preset" data-preset="digital-arrest">🚨 Digital Arrest (CBI/TRAI)</button>
+          <button class="test-chip danger msg-preset" data-preset="sbi-kyc">🏦 SBI KYC Phishing</button>
+          <button class="test-chip danger msg-preset" data-preset="india-post">📦 India Post Smishing</button>
+          <button class="test-chip danger msg-preset" data-preset="electricity-cut">⚡ Electricity Disconnection</button>
+          <button class="test-chip danger msg-preset" data-preset="upi-cashback">💸 UPI ₹4,999 Cashback</button>
+          <button class="test-chip verified msg-preset" data-preset="bank-debit">✅ Genuine Bank Debit</button>
+          <button class="test-chip verified msg-preset" data-preset="google-otp">✅ Genuine Google OTP</button>
+          <button class="test-chip verified msg-preset" data-preset="delivery-update">✅ Genuine Courier Update</button>
+        </div>
+      </section>
+
+      <!-- Message Result Layout -->
+      <div class="results-layout-grid" id="message-results-grid" style="display:none;">
+        <section class="top-score-section">
+          <div class="hero-score-card neutral" id="message-hero-card">
+            <div class="target-meta-row">
+              <div class="protocol-host-group">
+                <span class="protocol-badge" id="message-meta-badge">SMS / TEXT AUDIT</span>
+                <span class="target-hostname" id="message-meta-info">Analyzed Text Payload</span>
+              </div>
+              <span class="db-status-tag" id="message-db-tag">⚡ Threat Telemetry Active</span>
+            </div>
+
+            <div class="score-main-row">
+              <div class="gauge-wrapper">
+                <svg class="radial-gauge" viewBox="0 0 100 100">
+                  <circle class="gauge-bg" cx="50" cy="50" r="42"></circle>
+                  <circle class="gauge-bar" id="message-gauge-bar" cx="50" cy="50" r="42" stroke-dasharray="264" stroke-dashoffset="264"></circle>
+                </svg>
+                <div class="gauge-text-overlay">
+                  <span class="gauge-pct" id="message-score-value">0%</span>
+                  <span class="gauge-label">THREAT</span>
+                </div>
+              </div>
+              <div class="verdict-meta-block">
+                <div class="verdict-badge-pill" id="message-verdict-badge">Inspecting…</div>
+                <p class="verdict-summary-text" id="message-summary-text">Analyzing message authenticity and threat vectors…</p>
+              </div>
+            </div>
+
+            <!-- Message Tri-Metric Breakdown Bar -->
+            <div class="hybrid-ai-bar">
+              <div class="hybrid-pill" title="Manufactured urgency / intimidation markers">
+                <span class="hybrid-pill-dot heur"></span>
+                <span class="hybrid-pill-label">Urgency Coercion:</span>
+                <span class="hybrid-pill-val" id="msg-metric-urgency">0%</span>
+              </div>
+              <div class="hybrid-pill" title="Institutional / Law Enforcement Impersonation">
+                <span class="hybrid-pill-dot ml"></span>
+                <span class="hybrid-pill-label">Impersonation:</span>
+                <span class="hybrid-pill-val" id="msg-metric-impersonation">0%</span>
+              </div>
+              <div class="hybrid-pill combined" title="Phishing Link / Credential Harvesting Risk">
+                <span class="hybrid-pill-dot combined"></span>
+                <span class="hybrid-pill-label">Embedded Link Risk:</span>
+                <span class="hybrid-pill-val" id="msg-metric-links">0%</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Message Grounded Explanation Card -->
+        <section class="ai-explanation-section" id="message-ai-explanation-section">
+          <div class="ai-card-inner">
+            <div class="ai-header-bar">
+              <div class="ai-header-left">
+                <span class="ai-badge-chip">🧠 Grounded Threat Explanation</span>
+                <span class="ai-model-spec-chip">Indian Cybercrime Typology Engine</span>
+              </div>
+              <div class="ai-confidence-pill" id="message-confidence-pill">100% Offline Analysis</div>
+            </div>
+            <div class="ai-headline-text" id="message-explanation-headline">Assessment Overview</div>
+            <p class="ai-summary-text" id="message-explanation-body"></p>
+            <div class="why-unsafe-box" id="message-ioc-box" style="display:none;">
+              <div class="why-title">⚠️ Detected Indicators of Compromise:</div>
+              <div class="why-list" id="message-ioc-list"></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- TAB 3: QR CODE & UPI QUISHING DETECTOR -->
+    <div class="tab-pane" id="tab-qrcode" role="tabpanel" aria-labelledby="tab-btn-qrcode" style="display:none;">
+      <section class="module-intro-section">
+        <div class="module-badge-row">
+          <span class="module-chip">📷 QR &amp; Payment Defense</span>
+          <span class="module-spec-chip">Reverse UPI Fraud &amp; Quishing Shield</span>
+        </div>
+        <h2 class="module-heading">QR Code &amp; UPI Scam Detector</h2>
+        <p class="module-subtext">
+          Inspect QR codes before scanning with PhonePe, Google Pay, or Paytm. Detect deceptive Reverse UPI "Scan to Receive" debit traps, embedded Quishing phishing URLs, and unauthorized merchant masquerading.
+        </p>
+      </section>
+
+      <!-- QR Upload & Payload Section -->
+      <section class="top-search-section qr-input-section">
+        <div class="qr-dropzone-wrapper" id="qr-dropzone">
+          <input type="file" id="qr-file-input" accept="image/*" style="display:none;" />
+          <div class="dropzone-content" id="dropzone-prompt">
+            <span class="dropzone-icon">📷</span>
+            <div class="dropzone-text">
+              <strong>Click to upload or drag &amp; drop any QR code image here</strong>
+              <span>Supports PNG, JPG, WebP screenshots or scan images • Or paste from clipboard (Ctrl+V)</span>
+            </div>
+            <button type="button" class="btn-browse-qr" id="btn-browse-file">Browse Image</button>
+          </div>
+          <div class="dropzone-preview" id="dropzone-preview" style="display:none;">
+            <img id="qr-preview-img" alt="Uploaded QR Code" class="qr-preview-thumb" />
+            <div class="preview-meta">
+              <span class="preview-filename" id="qr-filename">qr_code.png</span>
+              <button type="button" class="btn-remove-qr" id="btn-remove-qr">Remove Image</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Manual QR Payload Input Option -->
+        <div class="manual-payload-row">
+          <span class="manual-label">Or paste raw QR URI / UPI payload:</span>
+          <div class="search-input-wrapper">
+            <span class="search-icon">⚡</span>
+            <input 
+              type="text" 
+              id="qr-raw-payload-input" 
+              placeholder="e.g. upi://pay?pa=scammer@oksbi&amp;pn=Refund&amp;am=5000 or https://..." 
+              autocomplete="off" 
+              spellcheck="false" 
+            />
+            <button id="btn-clear-qr-raw" class="btn-clear-input" style="display:none;">✕</button>
+            <button id="btn-verify-qr" class="btn-verify-action">Inspect QR</button>
+          </div>
+        </div>
+
+        <!-- Quick Test Presets for QR Code -->
+        <div class="test-samples-bar">
+          <span class="samples-label">Quick Presets:</span>
+          <button class="test-chip danger qr-preset" data-preset="upi-reverse-trap">🚨 Reverse UPI Trap (₹5,000 Debit)</button>
+          <button class="test-chip danger qr-preset" data-preset="quishing-paypal">🚨 Quishing Link (Fake PayPal QR)</button>
+          <button class="test-chip danger qr-preset" data-preset="fake-utility-bill">🚨 Fake Electricity Bill QR</button>
+          <button class="test-chip verified qr-preset" data-preset="irctc-merchant">✅ Genuine IRCTC Merchant QR</button>
+          <button class="test-chip verified qr-preset" data-preset="incometax-portal">✅ Genuine Gov Portal QR</button>
+          <button class="test-chip verified qr-preset" data-preset="wifi-qr">✅ Genuine Wi-Fi Network QR</button>
+        </div>
+      </section>
+
+      <!-- QR Results Layout Grid -->
+      <div class="results-layout-grid" id="qr-results-grid" style="display:none;">
+        <section class="top-score-section">
+          <div class="hero-score-card neutral" id="qr-hero-card">
+            <div class="target-meta-row">
+              <div class="protocol-host-group">
+                <span class="protocol-badge" id="qr-meta-badge">UPI PROTOCOL</span>
+                <span class="target-hostname" id="qr-meta-title">Decoded QR Intent</span>
+              </div>
+              <span class="db-status-tag" id="qr-db-tag">⚡ Fraud Detection Active</span>
+            </div>
+
+            <div class="score-main-row">
+              <div class="gauge-wrapper">
+                <svg class="radial-gauge" viewBox="0 0 100 100">
+                  <circle class="gauge-bg" cx="50" cy="50" r="42"></circle>
+                  <circle class="gauge-bar" id="qr-gauge-bar" cx="50" cy="50" r="42" stroke-dasharray="264" stroke-dashoffset="264"></circle>
+                </svg>
+                <div class="gauge-text-overlay">
+                  <span class="gauge-pct" id="qr-score-value">0%</span>
+                  <span class="gauge-label">THREAT</span>
+                </div>
+              </div>
+              <div class="verdict-meta-block">
+                <div class="verdict-badge-pill" id="qr-verdict-badge">Inspecting…</div>
+                <p class="verdict-summary-text" id="qr-summary-text">Analyzing QR intent and payment parameters…</p>
+              </div>
+            </div>
+
+            <!-- Decoded Intent Parameters Grid -->
+            <div class="qr-payload-inspector" id="qr-payload-inspector">
+              <div class="inspector-title">📋 Decoded Intent Parameters</div>
+              <div class="inspector-grid" id="qr-inspector-params"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- QR Grounded Explanation Card -->
+        <section class="ai-explanation-section" id="qr-ai-explanation-section">
+          <div class="ai-card-inner">
+            <div class="ai-header-bar">
+              <div class="ai-header-left">
+                <span class="ai-badge-chip">🧠 QR Threat Assessment</span>
+                <span class="ai-model-spec-chip">UPI Protocol &amp; Quishing Inspector</span>
+              </div>
+              <div class="ai-confidence-pill" id="qr-confidence-pill">100% Offline Engine</div>
+            </div>
+            <div class="ai-headline-text" id="qr-explanation-headline">Assessment Findings</div>
+            <p class="ai-summary-text" id="qr-explanation-body"></p>
+            <div class="why-unsafe-box" id="qr-warning-box">
+              <div class="why-title">🛡️ Critical UPI Security Rule:</div>
+              <div class="why-list">
+                <div class="why-item"><strong>Scanning a QR code NEVER credits money to your bank account.</strong> In NPCI/UPI protocol, scanning a QR code is exclusively used to make an outgoing DEBIT.</div>
+                <div class="why-item">Entering your UPI PIN always authorizes an immediate withdrawal from your account. Never enter your PIN to "receive" money.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- App Footer -->
+    <footer class="app-footer">
+      <span>🔒 100% On-Device Processing</span>
+      <span>•</span>
+      <span>Zero Cloud Telemetry</span>
+      <span>•</span>
+      <span>Veridex AI v2.1</span>
+    </footer>
+  </div>
+
+  <!-- Load engine files using standard browser scripts without modifying extension -->
+  <script src="../engine/brand-database.js"></script>
+  <script src="../engine/tld-risk.js"></script>
+  <script src="../engine/ip-intelligence.js"></script>
+  <script src="../engine/cookie-analyzer.js"></script>
+  <script src="../engine/veridex-ml-model.js"></script>
+  <script src="../engine/ai-explanation.js"></script>
+  <script src="../engine/veridex-engine.js"></script>
+  <script src="../engine/qr-decoder.js"></script>
+  <script src="../engine/tesseract.min.js"></script>
+  <script src="../engine/message-analyzer.js"></script>
+  <script src="../engine/qr-analyzer.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
