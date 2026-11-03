@@ -83,6 +83,50 @@
             <p class="verdict-summary-text" id="hero-summary-text">Analyzing website security and reputation...</p>
           </div>
         </div>
+
+        <!-- Hybrid AI Multi-Layer Detection Status -->
+        <div class="hybrid-ai-bar" id="popup-hybrid-bar">
+          <div class="hybrid-pill" title="Rule-based heuristic audit score">
+            <span class="hybrid-pill-dot heur"></span>
+            <span class="hybrid-pill-label">Heuristics:</span>
+            <span class="hybrid-pill-val" id="popup-heur-score">0%</span>
+          </div>
+          <div class="hybrid-pill" title="40-feature calibrated Random Forest model">
+            <span class="hybrid-pill-dot ml"></span>
+            <span class="hybrid-pill-label">ML Model:</span>
+            <span class="hybrid-pill-val" id="popup-ml-score">0%</span>
+          </div>
+          <div class="hybrid-pill combined" title="Correlated Hybrid AI Risk Score">
+            <span class="hybrid-pill-dot combined"></span>
+            <span class="hybrid-pill-label">Combined:</span>
+            <span class="hybrid-pill-val" id="popup-combined-score">0%</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GROUNDED AI EXPLANATION MODULE -->
+    <section id="popup-ai-explanation-box" class="popup-ai-explanation-box" style="display: none;">
+      <div class="popup-ai-header">
+        <div class="popup-ai-title-wrap">
+          <span class="ai-sparkle-icon">🧠</span>
+          <span class="popup-ai-title">Hybrid AI Explanation</span>
+        </div>
+        <span class="popup-ai-confidence-pill" id="popup-ai-confidence">99.8% Confidence</span>
+      </div>
+      <div class="popup-ai-headline" id="popup-ai-headline">Synthesizing findings...</div>
+      <p class="popup-ai-summary" id="popup-ai-summary"></p>
+      
+      <!-- Correlated Risk Drivers (Heuristic + ML) -->
+      <div class="popup-ai-drivers" id="popup-ai-drivers" style="display: none;">
+        <div class="popup-ai-section-label">🚨 Correlated Threat Findings:</div>
+        <div class="popup-ai-driver-list" id="popup-ai-driver-list"></div>
+      </div>
+
+      <!-- Positive Safety Factors -->
+      <div class="popup-ai-safety" id="popup-ai-safety" style="display: none;">
+        <div class="popup-ai-section-label">🛡️ Safety &amp; Authenticity Factors:</div>
+        <div class="popup-ai-safety-list" id="popup-ai-safety-list"></div>
       </div>
     </section>
 

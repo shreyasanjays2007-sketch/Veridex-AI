@@ -200,8 +200,9 @@ class VeridexMLEngine {{
     const hostParts = hostname.split(/[.\\-_]/);
     for (const brand of brands) {{
       for (const part of hostParts) {{
-        if (part.length >= 3) {{
+        if (part.length >= 3 && part !== 'www') {{
           const d = this.levenshtein(part, brand);
+          if (brand.length <= 4 && d > 1) continue;
           if (d < minBrandDist) minBrandDist = d;
         }}
       }}

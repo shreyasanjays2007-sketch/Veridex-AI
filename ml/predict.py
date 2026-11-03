@@ -50,65 +50,75 @@ def analyze_url(url: str, model, metadata: dict = None, dom_signals: dict = None
     )
 
     if is_top_rep or is_genuine_gov:
-        risk_pct = min(risk_pct, 0.5)
-        prob = min(prob, 0.005)
+        risk_pct = 0.0
+        prob = 0.0
     else:
-        # 2. Critical Specialized Security Overrides for Non-Allowlisted Domains
-        # A) Indian Banking / FinTech KYC Spoofing
+        # 2. Dynamic Variable Threat Scoring (Variable 85% to 100%)
+        threat_base = 85.0
+        threat_bonus = 0.0
+        has_major_threat = False
+
         if feat_dict.get("is_indian_banking_kyc_spoof") == 1.0 or feat_dict.get("dom_has_kyc_pan_harvesting") == 1.0:
-            risk_pct = max(risk_pct, 92.0)
-            prob = max(prob, 0.92)
+            threat_bonus += 7.0
+            has_major_threat = True
 
-        # B) Digital Arrest & TRAI Extortion
         if feat_dict.get("has_digital_arrest_or_trai_language") == 1.0 or feat_dict.get("dom_has_digital_arrest_extortion") == 1.0:
-            risk_pct = max(risk_pct, 95.0)
-            prob = max(prob, 0.95)
+            threat_bonus += 10.0
+            has_major_threat = True
 
-        # C) Fake India Post & Courier Smishing
         if feat_dict.get("is_india_post_courier_spoof") == 1.0 or feat_dict.get("dom_has_courier_smishing_fee") == 1.0:
-            risk_pct = max(risk_pct, 90.0)
-            prob = max(prob, 0.90)
+            threat_bonus += 6.0
+            has_major_threat = True
 
-        # D) UPI & QR Scams
         if feat_dict.get("is_upi_qr_scam") == 1.0 or feat_dict.get("dom_has_upi_qr_scam") == 1.0:
-            risk_pct = max(risk_pct, 88.0)
-            prob = max(prob, 0.88)
+            threat_bonus += 5.0
+            has_major_threat = True
 
-        # E) Global Brand Impersonation & Government Spoofing
         if feat_dict.get("is_brand_impersonation") == 1.0:
-            risk_pct = max(risk_pct, 85.0)
-            prob = max(prob, 0.85)
+            threat_bonus += 4.0
+            has_major_threat = True
 
         if feat_dict.get("is_deceptive_gov_spoof") == 1.0:
-            risk_pct = max(risk_pct, 88.0)
-            prob = max(prob, 0.88)
-            
-        if feat_dict.get("min_brand_edit_distance") in (1.0, 2.0):
-            risk_pct = max(risk_pct, 85.0)
-            prob = max(prob, 0.85)
+            threat_bonus += 8.0
+            has_major_threat = True
 
-        if feat_dict.get("num_keywords_host", 0) >= 2:
-            risk_pct = max(risk_pct, 78.0)
-            prob = max(prob, 0.78)
+        if feat_dict.get("has_brand_in_subdomain") == 1.0:
+            threat_bonus += 7.0
+            has_major_threat = True
+
+        if feat_dict.get("min_brand_edit_distance") in (1.0, 2.0):
+            threat_bonus += 6.0 if feat_dict.get("min_brand_edit_distance") == 1.0 else 3.0
+            has_major_threat = True
+
+        if feat_dict.get("is_raw_ip") == 1.0:
+            threat_bonus += 5.0
+            has_major_threat = True
+
+        if feat_dict.get("dom_has_urgency_or_seedphrase") == 1.0:
+            threat_bonus += 8.0
+            has_major_threat = True
 
         url_lower = url.lower()
         if "scam.com" in url_lower or "robux" in url_lower or "fake" in url_lower:
-            risk_pct = max(risk_pct, 85.0)
-            prob = max(prob, 0.85)
+            threat_bonus += 6.0
+            has_major_threat = True
 
-        if feat_dict.get("dom_has_urgency_or_seedphrase") == 1.0 and ("seed" in url_lower or "crypto" in url_lower or "wallet" in url_lower):
-            risk_pct = max(risk_pct, 92.0)
-            prob = max(prob, 0.92)
+        if has_major_threat and feat_dict.get("is_high_risk_tld") == 1.0:
+            threat_bonus += 3.0
 
-        # High-risk TLD baseline
-        if feat_dict.get("is_high_risk_tld") == 1.0:
-            risk_pct = max(risk_pct, 45.0)
-            prob = max(prob, 0.45)
+        if has_major_threat and feat_dict.get("is_https") == 0.0:
+            threat_bonus += 3.0
 
-        # Insecure HTTP on generic domain
-        if feat_dict.get("is_https") == 0.0:
-            risk_pct = max(risk_pct, 22.0)
-            prob = max(prob, 0.22)
+        if has_major_threat:
+            extra_variance = (prob - 0.5) * 6.0 if prob > 0.5 else 0.0
+            risk_pct = min(100.0, max(85.0, threat_base + threat_bonus + extra_variance))
+            prob = risk_pct / 100.0
+        elif feat_dict.get("is_high_risk_tld") == 1.0:
+            risk_pct = max(risk_pct, 35.0)
+            prob = max(prob, 0.35)
+        elif feat_dict.get("is_https") == 0.0:
+            risk_pct = max(risk_pct, 24.0)
+            prob = max(prob, 0.24)
 
     # Classify verdict
     if risk_pct >= 75.0:

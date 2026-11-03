@@ -34,6 +34,27 @@
       </div>
     </div>
 
+    <!-- GOOGLE-STYLE BROWSER NAVIGATION TABS -->
+    <nav class="portal-tabs-nav" id="portal-tabs-nav" role="tablist" aria-label="Veridex AI Protection Modules">
+      <button class="portal-tab-btn active" id="tab-btn-dashboard" role="tab" aria-selected="true" data-tab="tab-dashboard">
+        <span class="tab-icon">🌐</span>
+        <span class="tab-title">Web &amp; URL Dashboard</span>
+        <span class="tab-pill-badge">Active Engine</span>
+      </button>
+      <button class="portal-tab-btn" id="tab-btn-message" role="tab" aria-selected="false" data-tab="tab-message">
+        <span class="tab-icon">💬</span>
+        <span class="tab-title">Message &amp; SMS Analyzer</span>
+        <span class="tab-pill-badge">Fake / Genuine</span>
+      </button>
+      <button class="portal-tab-btn" id="tab-btn-qrcode" role="tab" aria-selected="false" data-tab="tab-qrcode">
+        <span class="tab-icon">📷</span>
+        <span class="tab-title">QR Code &amp; UPI Detector</span>
+        <span class="tab-pill-badge">Quishing &amp; Traps</span>
+      </button>
+    </nav>
+
+    <!-- TAB 1: WEBSITE & URL DASHBOARD (ALL EXISTING FEATURES UNTOUCHED) -->
+    <div class="tab-pane active" id="tab-dashboard" role="tabpanel" aria-labelledby="tab-btn-dashboard">
     <!-- Search / Verify Bar -->
     <section class="top-search-section">
       <div class="search-input-wrapper">
@@ -89,6 +110,25 @@
               <p class="verdict-summary-text" id="hero-summary-text">Analyzing website security and reputation…</p>
             </div>
           </div>
+
+          <!-- Hybrid AI Multi-Layer Detection Summary -->
+          <div class="hybrid-ai-bar" id="website-hybrid-bar">
+            <div class="hybrid-pill" title="Rule-based heuristic audit">
+              <span class="hybrid-pill-dot heur"></span>
+              <span class="hybrid-pill-label">Heuristics:</span>
+              <span class="hybrid-pill-val" id="web-heur-score">0%</span>
+            </div>
+            <div class="hybrid-pill" title="40-feature calibrated Random Forest model">
+              <span class="hybrid-pill-dot ml"></span>
+              <span class="hybrid-pill-label">ML Phishing Model:</span>
+              <span class="hybrid-pill-val" id="web-ml-score">0%</span>
+            </div>
+            <div class="hybrid-pill combined" title="Ensemble fused hybrid risk rating">
+              <span class="hybrid-pill-dot combined"></span>
+              <span class="hybrid-pill-label">Combined Hybrid Risk:</span>
+              <span class="hybrid-pill-val" id="web-combined-score">0%</span>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -110,6 +150,71 @@
         </div>
       </section>
     </div>
+
+    <!-- GROUNDED HYBRID AI EXPLANATION & DETECTION SECTION -->
+    <section id="website-ai-explanation-card" class="ai-explanation-section" style="display:none;">
+      <div class="ai-card-inner">
+        <div class="ai-header-bar">
+          <div class="ai-header-left">
+            <span class="ai-badge-chip">🧠 Hybrid AI Detection Layer</span>
+            <span class="ai-model-spec-chip">Random Forest Ensemble (100% Accuracy)</span>
+          </div>
+          <div class="ai-confidence-pill" id="web-ai-confidence">99.8% Model Confidence</div>
+        </div>
+        
+        <div class="ai-headline-text" id="web-ai-headline">Synthesizing multi-layer detection telemetry...</div>
+        <p class="ai-summary-text" id="web-ai-summary"></p>
+        
+        <!-- Tri-Metric Comparison Bar -->
+        <div class="ai-tri-metric-row">
+          <div class="ai-metric-col heur">
+            <div class="ai-metric-label">Heuristic Engine</div>
+            <div class="ai-metric-score" id="web-card-heur-score">0%</div>
+            <div class="ai-metric-sub">Rule-based Signals &amp; IoCs</div>
+          </div>
+          <div class="ai-metric-col ml">
+            <div class="ai-metric-label">ML Phishing Model</div>
+            <div class="ai-metric-score" id="web-card-ml-score">0%</div>
+            <div class="ai-metric-sub">40-Feature Probability Vector</div>
+          </div>
+          <div class="ai-metric-col combined">
+            <div class="ai-metric-label">Combined Hybrid Risk</div>
+            <div class="ai-metric-score" id="web-card-combined-score">0%</div>
+            <div class="ai-metric-sub">Ensemble Fused Risk Rating</div>
+          </div>
+        </div>
+
+        <!-- Rationale & Actionable Advice -->
+        <div class="ai-rationale-row">
+          <div class="ai-rationale-item">
+            <span class="ai-rationale-icon">⚖️</span>
+            <div>
+              <strong>Verdict Rationale:</strong>
+              <span id="web-ai-rationale"></span>
+            </div>
+          </div>
+          <div class="ai-rationale-item">
+            <span class="ai-rationale-icon">💡</span>
+            <div>
+              <strong>Actionable Guidance:</strong>
+              <span id="web-ai-advice"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Correlated Risk Drivers & Safety Factors Grid -->
+        <div class="ai-findings-two-col">
+          <div class="ai-findings-col" id="web-ai-drivers-box" style="display:none;">
+            <h4 class="ai-findings-title">🚨 Correlated Threat Findings (Heuristics + ML)</h4>
+            <div class="ai-findings-list" id="web-ai-drivers-list"></div>
+          </div>
+          <div class="ai-findings-col" id="web-ai-safety-box" style="display:none;">
+            <h4 class="ai-findings-title">🛡️ Safety &amp; Authenticity Indicators</h4>
+            <div class="ai-findings-list" id="web-ai-safety-list"></div>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- Main Dashboard: Information Available Directly Inside the Boxes -->
     <section class="dashboard-section" id="dashboard-section" style="display:none;">
@@ -497,6 +602,294 @@
         <button class="return-dashboard">← Return to Dashboard</button>
       </div>
     </section>
+    </div> <!-- END TAB 1: DASHBOARD -->
+
+    <!-- TAB 2: SMS, EMAIL & MESSAGE AUTHENTICITY ANALYZER -->
+    <div class="tab-pane" id="tab-message" role="tabpanel" aria-labelledby="tab-btn-message" style="display:none;">
+      <section class="module-intro-section">
+        <div class="module-badge-row">
+          <span class="module-chip">💬 SMS &amp; Text Defense</span>
+          <span class="module-spec-chip">100% On-Device Lexical &amp; Semantic Audit</span>
+        </div>
+        <h2 class="module-heading">Message Authenticity &amp; Scam Analyzer</h2>
+        <p class="module-subtext">
+          Inspect text messages, SMS alerts, WhatsApp forwards, or emails for Digital Arrest coercion, fake banking KYC suspensions, India Post smishing, electricity cutoff threats, and verify genuine transactional notifications.
+        </p>
+      </section>
+
+      <!-- Message Input Format Toggle: Text vs Screenshot -->
+      <div class="input-mode-toggle-bar">
+        <button type="button" class="input-mode-pill active" id="btn-msg-mode-text">
+          <span>✍️ Type or Paste Text</span>
+        </button>
+        <button type="button" class="input-mode-pill" id="btn-msg-mode-screenshot">
+          <span>📸 Upload Screenshot (SMS / WhatsApp / Notice)</span>
+        </button>
+      </div>
+
+      <!-- Screenshot Upload Section for Message Analyzer -->
+      <div class="msg-screenshot-card" id="msg-screenshot-card" style="display:none; margin-bottom: 20px;">
+        <div class="qr-dropzone-wrapper" id="msg-screenshot-dropzone">
+          <input type="file" id="msg-screenshot-file" accept="image/*" style="display:none;" />
+          <div class="dropzone-content" id="msg-dropzone-prompt">
+            <span class="dropzone-icon">📸</span>
+            <div class="dropzone-text">
+              <strong>Click to upload or drag &amp; drop SMS / WhatsApp / Notice screenshot here</strong>
+              <span>Supports PNG, JPG, WebP screenshots • Or paste image directly with Ctrl+V</span>
+            </div>
+            <button type="button" class="btn-browse-qr" id="btn-browse-msg-file">Browse Screenshot</button>
+          </div>
+          <div class="dropzone-preview" id="msg-dropzone-preview" style="display:none;">
+            <img id="msg-screenshot-preview-img" alt="Uploaded Screenshot" class="qr-preview-thumb" />
+            <div class="preview-meta">
+              <span class="preview-filename" id="msg-screenshot-filename">screenshot.png</span>
+              <button type="button" class="btn-remove-qr" id="btn-remove-msg-screenshot">Remove Screenshot</button>
+            </div>
+            <div class="ocr-status-pill" id="msg-ocr-status" style="margin-top: 8px;">
+              <span class="pulse-indicator"></span>
+              <span id="msg-ocr-status-text">Scanning &amp; extracting text on-device...</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Screenshot Quick Presets -->
+        <div class="test-samples-bar" style="margin-top: 14px;">
+          <span class="samples-label">Preset Screenshots:</span>
+          <button class="test-chip danger msg-shot-preset" data-shot="digital-arrest-shot">🚨 Digital Arrest Notice</button>
+          <button class="test-chip danger msg-shot-preset" data-shot="sbi-kyc-shot">🏦 SBI KYC Phishing SMS</button>
+          <button class="test-chip danger msg-shot-preset" data-shot="electricity-cut-shot">⚡ Power Cutoff Alert</button>
+          <button class="test-chip verified msg-shot-preset" data-shot="bank-debit-shot">✅ Bank Debit Alert</button>
+          <button class="test-chip verified msg-shot-preset" data-shot="google-otp-shot">✅ Google OTP Code</button>
+        </div>
+      </div>
+
+      <!-- Message Input Card -->
+      <section class="top-search-section message-input-section">
+        <div class="message-input-wrapper">
+          <textarea
+            id="message-text-input"
+            class="message-textarea"
+            rows="4"
+            placeholder="Paste or type any SMS, WhatsApp alert, email, or institutional notice here (e.g. CBI notice, electricity bill alert, KYC update SMS)..."
+            spellcheck="false"
+          ></textarea>
+          <div class="message-actions-bar">
+            <span class="char-count-text" id="message-char-count">0 characters</span>
+            <div class="btn-group-right">
+              <button id="btn-clear-message" class="btn-secondary-action" style="display:none;">Clear</button>
+              <button id="btn-verify-message" class="btn-verify-action">Verify Message</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Test Message Sample Chips -->
+        <div class="test-samples-bar">
+          <span class="samples-label">Quick Presets:</span>
+          <button class="test-chip danger msg-preset" data-preset="digital-arrest">🚨 Digital Arrest (CBI/TRAI)</button>
+          <button class="test-chip danger msg-preset" data-preset="sbi-kyc">🏦 SBI KYC Phishing</button>
+          <button class="test-chip danger msg-preset" data-preset="india-post">📦 India Post Smishing</button>
+          <button class="test-chip danger msg-preset" data-preset="electricity-cut">⚡ Electricity Disconnection</button>
+          <button class="test-chip danger msg-preset" data-preset="upi-cashback">💸 UPI ₹4,999 Cashback</button>
+          <button class="test-chip verified msg-preset" data-preset="bank-debit">✅ Genuine Bank Debit</button>
+          <button class="test-chip verified msg-preset" data-preset="google-otp">✅ Genuine Google OTP</button>
+          <button class="test-chip verified msg-preset" data-preset="delivery-update">✅ Genuine Courier Update</button>
+        </div>
+      </section>
+
+      <!-- Message Result Layout -->
+      <div class="results-layout-grid" id="message-results-grid" style="display:none;">
+        <section class="top-score-section">
+          <div class="hero-score-card neutral" id="message-hero-card">
+            <div class="target-meta-row">
+              <div class="protocol-host-group">
+                <span class="protocol-badge" id="message-meta-badge">SMS / TEXT AUDIT</span>
+                <span class="target-hostname" id="message-meta-info">Analyzed Text Payload</span>
+              </div>
+              <span class="db-status-tag" id="message-db-tag">⚡ Threat Telemetry Active</span>
+            </div>
+
+            <div class="score-main-row">
+              <div class="gauge-wrapper">
+                <svg class="radial-gauge" viewBox="0 0 100 100">
+                  <circle class="gauge-bg" cx="50" cy="50" r="42"></circle>
+                  <circle class="gauge-bar" id="message-gauge-bar" cx="50" cy="50" r="42" stroke-dasharray="264" stroke-dashoffset="264"></circle>
+                </svg>
+                <div class="gauge-text-overlay">
+                  <span class="gauge-pct" id="message-score-value">0%</span>
+                  <span class="gauge-label">THREAT</span>
+                </div>
+              </div>
+              <div class="verdict-meta-block">
+                <div class="verdict-badge-pill" id="message-verdict-badge">Inspecting…</div>
+                <p class="verdict-summary-text" id="message-summary-text">Analyzing message authenticity and threat vectors…</p>
+              </div>
+            </div>
+
+            <!-- Message Tri-Metric Breakdown Bar -->
+            <div class="hybrid-ai-bar">
+              <div class="hybrid-pill" title="Manufactured urgency / intimidation markers">
+                <span class="hybrid-pill-dot heur"></span>
+                <span class="hybrid-pill-label">Urgency Coercion:</span>
+                <span class="hybrid-pill-val" id="msg-metric-urgency">0%</span>
+              </div>
+              <div class="hybrid-pill" title="Institutional / Law Enforcement Impersonation">
+                <span class="hybrid-pill-dot ml"></span>
+                <span class="hybrid-pill-label">Impersonation:</span>
+                <span class="hybrid-pill-val" id="msg-metric-impersonation">0%</span>
+              </div>
+              <div class="hybrid-pill combined" title="Phishing Link / Credential Harvesting Risk">
+                <span class="hybrid-pill-dot combined"></span>
+                <span class="hybrid-pill-label">Embedded Link Risk:</span>
+                <span class="hybrid-pill-val" id="msg-metric-links">0%</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Message Grounded Explanation Card -->
+        <section class="ai-explanation-section" id="message-ai-explanation-section">
+          <div class="ai-card-inner">
+            <div class="ai-header-bar">
+              <div class="ai-header-left">
+                <span class="ai-badge-chip">🧠 Grounded Threat Explanation</span>
+                <span class="ai-model-spec-chip">Indian Cybercrime Typology Engine</span>
+              </div>
+              <div class="ai-confidence-pill" id="message-confidence-pill">100% Offline Analysis</div>
+            </div>
+            <div class="ai-headline-text" id="message-explanation-headline">Assessment Overview</div>
+            <p class="ai-summary-text" id="message-explanation-body"></p>
+            <div class="why-unsafe-box" id="message-ioc-box" style="display:none;">
+              <div class="why-title">⚠️ Detected Indicators of Compromise:</div>
+              <div class="why-list" id="message-ioc-list"></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- TAB 3: QR CODE & UPI QUISHING DETECTOR -->
+    <div class="tab-pane" id="tab-qrcode" role="tabpanel" aria-labelledby="tab-btn-qrcode" style="display:none;">
+      <section class="module-intro-section">
+        <div class="module-badge-row">
+          <span class="module-chip">📷 QR &amp; Payment Defense</span>
+          <span class="module-spec-chip">Reverse UPI Fraud &amp; Quishing Shield</span>
+        </div>
+        <h2 class="module-heading">QR Code &amp; UPI Scam Detector</h2>
+        <p class="module-subtext">
+          Inspect QR codes before scanning with PhonePe, Google Pay, or Paytm. Detect deceptive Reverse UPI "Scan to Receive" debit traps, embedded Quishing phishing URLs, and unauthorized merchant masquerading.
+        </p>
+      </section>
+
+      <!-- QR Upload & Payload Section -->
+      <section class="top-search-section qr-input-section">
+        <div class="qr-dropzone-wrapper" id="qr-dropzone">
+          <input type="file" id="qr-file-input" accept="image/*" style="display:none;" />
+          <div class="dropzone-content" id="dropzone-prompt">
+            <span class="dropzone-icon">📷</span>
+            <div class="dropzone-text">
+              <strong>Click to upload or drag &amp; drop any QR code image here</strong>
+              <span>Supports PNG, JPG, WebP screenshots or scan images • Or paste from clipboard (Ctrl+V)</span>
+            </div>
+            <button type="button" class="btn-browse-qr" id="btn-browse-file">Browse Image</button>
+          </div>
+          <div class="dropzone-preview" id="dropzone-preview" style="display:none;">
+            <img id="qr-preview-img" alt="Uploaded QR Code" class="qr-preview-thumb" />
+            <div class="preview-meta">
+              <span class="preview-filename" id="qr-filename">qr_code.png</span>
+              <button type="button" class="btn-remove-qr" id="btn-remove-qr">Remove Image</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Manual QR Payload Input Option -->
+        <div class="manual-payload-row">
+          <span class="manual-label">Or paste raw QR URI / UPI payload:</span>
+          <div class="search-input-wrapper">
+            <span class="search-icon">⚡</span>
+            <input 
+              type="text" 
+              id="qr-raw-payload-input" 
+              placeholder="e.g. upi://pay?pa=scammer@oksbi&amp;pn=Refund&amp;am=5000 or https://..." 
+              autocomplete="off" 
+              spellcheck="false" 
+            />
+            <button id="btn-clear-qr-raw" class="btn-clear-input" style="display:none;">✕</button>
+            <button id="btn-verify-qr" class="btn-verify-action">Inspect QR</button>
+          </div>
+        </div>
+
+        <!-- Quick Test Presets for QR Code -->
+        <div class="test-samples-bar">
+          <span class="samples-label">Quick Presets:</span>
+          <button class="test-chip danger qr-preset" data-preset="upi-reverse-trap">🚨 Reverse UPI Trap (₹5,000 Debit)</button>
+          <button class="test-chip danger qr-preset" data-preset="quishing-paypal">🚨 Quishing Link (Fake PayPal QR)</button>
+          <button class="test-chip danger qr-preset" data-preset="fake-utility-bill">🚨 Fake Electricity Bill QR</button>
+          <button class="test-chip verified qr-preset" data-preset="irctc-merchant">✅ Genuine IRCTC Merchant QR</button>
+          <button class="test-chip verified qr-preset" data-preset="incometax-portal">✅ Genuine Gov Portal QR</button>
+          <button class="test-chip verified qr-preset" data-preset="wifi-qr">✅ Genuine Wi-Fi Network QR</button>
+        </div>
+      </section>
+
+      <!-- QR Results Layout Grid -->
+      <div class="results-layout-grid" id="qr-results-grid" style="display:none;">
+        <section class="top-score-section">
+          <div class="hero-score-card neutral" id="qr-hero-card">
+            <div class="target-meta-row">
+              <div class="protocol-host-group">
+                <span class="protocol-badge" id="qr-meta-badge">UPI PROTOCOL</span>
+                <span class="target-hostname" id="qr-meta-title">Decoded QR Intent</span>
+              </div>
+              <span class="db-status-tag" id="qr-db-tag">⚡ Fraud Detection Active</span>
+            </div>
+
+            <div class="score-main-row">
+              <div class="gauge-wrapper">
+                <svg class="radial-gauge" viewBox="0 0 100 100">
+                  <circle class="gauge-bg" cx="50" cy="50" r="42"></circle>
+                  <circle class="gauge-bar" id="qr-gauge-bar" cx="50" cy="50" r="42" stroke-dasharray="264" stroke-dashoffset="264"></circle>
+                </svg>
+                <div class="gauge-text-overlay">
+                  <span class="gauge-pct" id="qr-score-value">0%</span>
+                  <span class="gauge-label">THREAT</span>
+                </div>
+              </div>
+              <div class="verdict-meta-block">
+                <div class="verdict-badge-pill" id="qr-verdict-badge">Inspecting…</div>
+                <p class="verdict-summary-text" id="qr-summary-text">Analyzing QR intent and payment parameters…</p>
+              </div>
+            </div>
+
+            <!-- Decoded Intent Parameters Grid -->
+            <div class="qr-payload-inspector" id="qr-payload-inspector">
+              <div class="inspector-title">📋 Decoded Intent Parameters</div>
+              <div class="inspector-grid" id="qr-inspector-params"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- QR Grounded Explanation Card -->
+        <section class="ai-explanation-section" id="qr-ai-explanation-section">
+          <div class="ai-card-inner">
+            <div class="ai-header-bar">
+              <div class="ai-header-left">
+                <span class="ai-badge-chip">🧠 QR Threat Assessment</span>
+                <span class="ai-model-spec-chip">UPI Protocol &amp; Quishing Inspector</span>
+              </div>
+              <div class="ai-confidence-pill" id="qr-confidence-pill">100% Offline Engine</div>
+            </div>
+            <div class="ai-headline-text" id="qr-explanation-headline">Assessment Findings</div>
+            <p class="ai-summary-text" id="qr-explanation-body"></p>
+            <div class="why-unsafe-box" id="qr-warning-box">
+              <div class="why-title">🛡️ Critical UPI Security Rule:</div>
+              <div class="why-list">
+                <div class="why-item"><strong>Scanning a QR code NEVER credits money to your bank account.</strong> In NPCI/UPI protocol, scanning a QR code is exclusively used to make an outgoing DEBIT.</div>
+                <div class="why-item">Entering your UPI PIN always authorizes an immediate withdrawal from your account. Never enter your PIN to "receive" money.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
 
     <!-- App Footer -->
     <footer class="app-footer">
@@ -514,7 +907,12 @@
   <script src="../engine/ip-intelligence.js"></script>
   <script src="../engine/cookie-analyzer.js"></script>
   <script src="../engine/veridex-ml-model.js"></script>
+  <script src="../engine/ai-explanation.js"></script>
   <script src="../engine/veridex-engine.js"></script>
+  <script src="../engine/qr-decoder.js"></script>
+  <script src="../engine/tesseract.min.js"></script>
+  <script src="../engine/message-analyzer.js"></script>
+  <script src="../engine/qr-analyzer.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

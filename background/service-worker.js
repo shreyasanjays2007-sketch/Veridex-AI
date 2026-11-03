@@ -11,6 +11,7 @@ importScripts(
   '../engine/ip-intelligence.js',
   '../engine/cookie-analyzer.js',
   '../engine/veridex-ml-model.js',
+  '../engine/ai-explanation.js',
   '../engine/veridex-engine.js'
 );
 
