@@ -213,9 +213,10 @@ class VeridexMLEngine {
       'snopes.com', 'bbc.com', 'nytimes.com', 'cloudflare.com', 'discord.com',
       'sbi.co.in', 'onlinesbi.sbi', 'hdfcbank.com', 'paytm.com', 'phonepe.com',
       'indiapost.gov.in', 'trai.gov.in', 'bluedart.com', 'dtdc.in', 'delhivery.com',
-      'cybercrime.gov.in', 'incometax.gov.in', 'uidai.gov.in'
+      'cybercrime.gov.in', 'incometax.gov.in', 'uidai.gov.in', 'veridex-ai-357q.onrender.com'
     ]);
-    const isTopReputable = (topReputable.has(apex) && hasBrandSubdomain === 0.0 && isBrandImpersonation === 0.0) ? 1.0 : 0.0;
+    const isOfficialPortal = (hostname === 'veridex-ai-357q.onrender.com' || hostname.endsWith('.veridex-ai-357q.onrender.com'));
+    const isTopReputable = ((topReputable.has(apex) || topReputable.has(hostname) || isOfficialPortal) && hasBrandSubdomain === 0.0 && isBrandImpersonation === 0.0) ? 1.0 : 0.0;
 
     // Specialized Indian Threat Detectors
     const bankBrands = ['sbi', 'onlinesbi', 'hdfc', 'hdfcbank', 'paytm', 'phonepe', 'icici', 'pnb'];
@@ -295,10 +296,11 @@ class VeridexMLEngine {
 
     let finalProb = rawProb;
     // 1. Verified authentic top domains & authentic government portals
-    const isTopRep = (features[28] === 1.0);
+    const isOfficial = (urlString || '').toLowerCase().includes('veridex-ai-357q.onrender.com');
+    const isTopRep = (features[28] === 1.0) || isOfficial;
     const isGenuineGov = (features[26] === 1.0 && features[27] === 0.0 && features[24] === 0.0);
 
-    if (isTopRep || isGenuineGov) {
+    if (isTopRep || isGenuineGov || isOfficial) {
       finalProb = 0.0;
     } else {
       // 2. Specialized dynamic threat calculation for suspicious/phishing domains (variable 0.85 to 1.00)

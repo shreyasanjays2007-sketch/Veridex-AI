@@ -398,8 +398,9 @@ class VeridexEngine {
     }
 
     // 3. Global Database Check: Verified Real vs Known Scam
-    const isVerifiedReal = _isVerifiedReal ? _isVerifiedReal(hostname, apexDomain) : verifiedRealDomains.has(apexDomain);
-    const isKnownScam = _isKnownScam ? _isKnownScam(hostname, apexDomain) : knownScamDomains.has(apexDomain);
+    const isOfficialVeridex = (hostname === 'veridex-ai-357q.onrender.com' || hostname.endsWith('.veridex-ai-357q.onrender.com'));
+    const isVerifiedReal = isOfficialVeridex || (_isVerifiedReal ? _isVerifiedReal(hostname, apexDomain) : (verifiedRealDomains.has(hostname) || verifiedRealDomains.has(apexDomain)));
+    const isKnownScam = !isOfficialVeridex && (_isKnownScam ? _isKnownScam(hostname, apexDomain) : knownScamDomains.has(apexDomain));
 
     let databaseMatch = {
       isReal: false,
@@ -415,15 +416,19 @@ class VeridexEngine {
         isReal: true,
         isFake: false,
         status: 'verified_real',
-        label: 'Verified Authentic Domain',
-        description: 'Domain is recognized and validated in the Veridex Global Verified Registry.'
+        label: isOfficialVeridex ? 'Verified Official Veridex AI Platform' : 'Verified Authentic Domain',
+        description: isOfficialVeridex 
+          ? 'Authenticated official Veridex AI production cloud platform confirmed in the Verified Registry.'
+          : 'Domain is recognized and validated in the Veridex Global Verified Registry.'
       };
       signals.push({
         id: 'verified_real_domain',
         severity: 'info',
         category: 'domain',
-        name: 'Verified Authentic Registry Match',
-        description: `Domain '${hostname}' is authenticated in the Veridex Global Safe Database of legitimate institutions.`,
+        name: isOfficialVeridex ? 'Official Veridex AI Platform Verified' : 'Verified Authentic Registry Match',
+        description: isOfficialVeridex
+          ? "Domain 'veridex-ai-357q.onrender.com' is confirmed as the authentic Veridex AI production cloud portal."
+          : `Domain '${hostname}' is authenticated in the Veridex Global Safe Database of legitimate institutions.`,
         points: 0
       });
 

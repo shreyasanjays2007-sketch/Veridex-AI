@@ -145,7 +145,13 @@
       let verdictRationale = '';
       let actionableAdvice = '';
 
-      if (isVerifiedGov) {
+      const isOfficialVeridex = hostname === 'veridex-ai-357q.onrender.com' || hostname.endsWith('.veridex-ai-357q.onrender.com');
+      if (isOfficialVeridex) {
+        headline = 'Verified Official Veridex AI Deployment';
+        summary = `The inspected portal "${hostname}" is the authentic, verified cloud deployment of Veridex AI. Both heuristic inspection and the Hybrid ML model confirm 0% risk.`;
+        verdictRationale = 'Verified official application platform match combined with active TLS encryption warrants a 0% risk score.';
+        actionableAdvice = 'Safe for everyday use, threat analysis, and cybersecurity operations.';
+      } else if (isVerifiedGov) {
         headline = 'Verified Official Government Destination';
         summary = `The inspected portal "${hostname}" is an authentic, certified government platform verified through authoritative public registers. Both heuristic inspection and machine learning confirm 0% risk.`;
         verdictRationale = 'Verified official government allowlist match combined with active HTTPS encryption warrants a 0% risk score.';

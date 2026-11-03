@@ -10,6 +10,14 @@
 
 // 1. High-Value Brand Targets Database (Financial, Tech, Social, Crypto, Retail, Logistics)
 const VERIDEX_BRANDS = [
+  {
+    name: 'Veridex AI',
+    nameKey: 'veridex',
+    canonical: ['veridex-ai-357q.onrender.com'],
+    officialUrl: 'https://veridex-ai-357q.onrender.com',
+    keywords: ['veridex', 'veridex-ai', 'veridexai'],
+    category: 'technology'
+  },
   // Financial & Payment Gateways
   {
     name: 'PayPal',
@@ -769,6 +777,8 @@ const VERIFIED_GOVERNMENT_DOMAINS = deduplicateDomains(RAW_GOVERNMENT_DOMAINS);
 // Contains over 1,200 top legitimate websites across the globe (0 False Positive Guarantee)
 
 const RAW_VERIFIED_REAL_DOMAINS = [
+  // Official Veridex AI Cloud Platform
+  'veridex-ai-357q.onrender.com',
   // Global Tech & Search Engines
   'google.com', 'google.co.in', 'google.co.uk', 'google.de', 'google.fr', 'google.ca', 'google.com.au', 'google.co.jp', 'google.com.br', 'google.es', 'google.it', 'google.nl', 'google.pl', 'google.ru',
   'youtube.com', 'youtu.be', 'gmail.com', 'gstatic.com', 'googleapis.com', 'googleusercontent.com', 'googledrive.com', 'android.com',
@@ -1313,6 +1323,11 @@ function isVerifiedRealDomain(hostname, apexDomain) {
   if (!hostname) return false;
   const host = normalizeDomain(hostname);
   const apex = normalizeDomain(apexDomain || host);
+
+  // Official Veridex AI Cloud Platform
+  if (host === 'veridex-ai-357q.onrender.com' || host.endsWith('.veridex-ai-357q.onrender.com')) {
+    return true;
+  }
 
   // If domain is attempting government spoofing, never treat as verified real
   if (detectGovernmentSpoofing(host, apex).isSpoofing) {
