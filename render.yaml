@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: veridex-ai
+    env: static
+    buildCommand: ""
+    staticPublishPath: website
