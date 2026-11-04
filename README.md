@@ -4,7 +4,7 @@
 
 ---
 
-## 🧭 Workflow Architecture
+##  Workflow Architecture
 
 ```
                       1. User clicks a website link
@@ -23,7 +23,7 @@
 
 ---
 
-## ✨ Key Capabilities
+##  Key Capabilities
 
 1. **Generalized Phishing & Fake Site Detection (Not Limited to Blocklists)**:
    - **Homograph & Punycode Analysis**: Detects internationalized character lookalikes (e.g. Cyrillic `а` / `е` / `о` mimicking Latin letters).
@@ -59,7 +59,7 @@
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 ```
 D:\veridex-ai\
@@ -114,7 +114,7 @@ D:\veridex-ai\
 
 ---
 
-## 🚀 Quick Start & Deployment
+##  Quick Start & Deployment
 
 1. Open your browser and go to `chrome://extensions` (or `edge://extensions`).
 2. Turn ON **Developer mode** (top-right toggle).
